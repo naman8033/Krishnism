@@ -12,13 +12,15 @@ if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
 const publishableKey = (process.env.SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj').trim();
 const defaultUpiId = (process.env.DEFAULT_UPI_ID || 'naman8080@ybl').trim();
 const defaultUpiName = (process.env.DEFAULT_UPI_NAME || 'Krishnism').trim();
+const defaultSupportWhatsapp = (process.env.DEFAULT_SUPPORT_WHATSAPP || '918080808080').trim();
 
 const configContent = `// Auto-generated build configuration for Vercel
 window.KRISHNISM_SUPABASE = {
   url: '${rawUrl}',
   publishableKey: '${publishableKey}',
   defaultUpiId: '${defaultUpiId}',
-  defaultUpiName: '${defaultUpiName}'
+  defaultUpiName: '${defaultUpiName}',
+  defaultSupportWhatsapp: '${defaultSupportWhatsapp}'
 };
 `;
 

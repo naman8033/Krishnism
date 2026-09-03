@@ -23,6 +23,7 @@ create table if not exists public.store_settings (
   student_welcome text,
   upi_id text default 'naman8080@ybl',
   upi_name text default 'Krishnism',
+  support_whatsapp text default '918080808080',
   updated_at timestamptz not null default now()
 );
 
@@ -31,6 +32,7 @@ alter table public.store_settings add column if not exists default_meet_url text
 alter table public.store_settings add column if not exists student_welcome text;
 alter table public.store_settings add column if not exists upi_id text default 'naman8080@ybl';
 alter table public.store_settings add column if not exists upi_name text default 'Krishnism';
+alter table public.store_settings add column if not exists support_whatsapp text default '918080808080';
 
 create table if not exists public.orders (
   id uuid primary key default gen_random_uuid(),

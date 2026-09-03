@@ -23,7 +23,7 @@ Krishnism is configured to run in **100% Free Mode** with zero third-party payme
 3. In **Customers & Students**, view all registered customers and learners, search by name/email/phone, see lifetime spend, course enrolments, and track WhatsApp cohort group onboarding.
 4. In **Orders & Payments**, view customer orders, inspect their UPI UTR reference number, change order status (`Pending` → `Paid` → `Shipped`), and add tracking courier numbers.
 5. In **Books & Courses**, add, edit, publish or hide store offerings.
-6. In **Store & UPI Settings**, dynamically change your UPI ID, Payee Name, WhatsApp Group link, and Google Meet link at any time without code changes!
+6. In **Store & UPI Settings**, dynamically change your UPI ID, Payee Name, Owner/Support WhatsApp number for customer queries, WhatsApp Cohort link, and Google Meet link at any time without code changes!
 
 ### 5. Deployment
 - Host the files on any static host (Cloudflare Pages, Vercel, Netlify, or GitHub Pages).
