@@ -657,10 +657,38 @@
     .book-title:hover { color: var(--saffron); }
     
     .book-desc {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--muted);
       line-height: 1.6;
-      margin: 0 0 20px;
+      margin: 0 0 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 64px;
+      cursor: pointer;
+      transition: color .2s ease;
+    }
+    .book-desc:hover { color: var(--ink); }
+
+    .card-read-more {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--saffron);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 14px;
+      transition: color .2s;
+    }
+    .card-read-more:hover {
+      color: var(--saffron-dark);
+      text-decoration: underline;
     }
 
     .card-footer {
@@ -747,11 +775,20 @@
     }
     .course-title:hover { color: var(--saffron); }
     .course-desc {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 24px;
+      margin-bottom: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-height: 66px;
+      cursor: pointer;
+      transition: color .2s ease;
     }
+    .course-desc:hover { color: var(--ink); }
 
     .course-badge-row {
       display: flex;
@@ -1156,9 +1193,9 @@
     /* Product Details & Reviews Modal */
     .modal-grid {
       display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 28px;
-      margin-top: 14px;
+      grid-template-columns: 260px 1fr;
+      gap: 32px;
+      margin-top: 18px;
       align-items: start;
     }
     .modal-cover-box {
@@ -1167,6 +1204,21 @@
       border-radius: 8px;
       padding: 24px 16px;
       text-align: center;
+    }
+    .modal-synopsis-card {
+      background: #fdfaf4;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(39, 34, 27, 0.03);
+    }
+    .modal-description-text {
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #3f362a;
+      white-space: pre-line;
+      font-family: inherit;
     }
     .review-score-summary {
       background: #fcf8ee;
@@ -1981,7 +2033,7 @@
 
   <!-- Product Details & Verified Reviews Modal -->
   <div class="modal" id="productDetailModal">
-    <div class="panel" style="width:min(720px, 100%)">
+    <div class="panel" style="width:min(880px, 100%)">
       <button class="close-btn" onclick="closeProductModal()">×</button>
       <div id="productModalContent"></div>
     </div>
@@ -2287,41 +2339,50 @@
         const coverVal = (p.cover || '').trim();
         const isImg = coverVal.startsWith('http') || coverVal.startsWith('data:image') || coverVal.startsWith('/');
         const isThemeClass = coverVal === 'green' || coverVal === 'blue';
+        const cleanDesc = (p.desc || '').replace(/\r?\n+/g, ' ').trim();
+        const isLong = cleanDesc.length > 85;
 
         return `
           <article class="book-card">
-            <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
-                 ${isImg ? `style="background-image: url('${coverVal}');"` : ''} 
-                 onclick="openProductModal('${p.id}')" 
-                 title="Click to view details & reviews">
-              ${isImg ? `
-                <div class="book-cover-overlay">
-                  <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                  <strong style="font-family:'Cinzel',serif; font-size:22px; line-height:1.1; margin:6px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
-                  <small style="font-size:10.5px; letter-spacing:.1em; color:#f0e2cf; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
-                </div>
-              ` : `
-                <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
-                <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
-              `}
-            </div>
-            
             <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px">
-                <span class="book-tag">${p.kind}</span>
-                <button type="button" class="rating-badge" onclick="openProductModal('${p.id}')" title="Read verified reviews">
-                  <span class="star-icon">★</span> <b>${rating.avg}</b> <small>(${rating.count})</small>
-                </button>
+              <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
+                   ${isImg ? `style="background-image: url('${coverVal}');"` : ''} 
+                   onclick="openProductModal('${p.id}')" 
+                   title="Click to view details & reflections">
+                ${isImg ? `
+                  <div class="book-cover-overlay">
+                    <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                    <strong style="font-family:'Cinzel',serif; font-size:22px; line-height:1.1; margin:6px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
+                    <small style="font-size:10.5px; letter-spacing:.1em; color:#f0e2cf; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
+                  </div>
+                ` : `
+                  <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                  <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
+                  <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
+                `}
               </div>
-              <h3 class="book-title" onclick="openProductModal('${p.id}')">${p.name}</h3>
-              <p class="book-desc">${p.desc}</p>
+              
+              <div style="margin-top:14px">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px">
+                  <span class="book-tag">${p.kind}</span>
+                  <button type="button" class="rating-badge" onclick="openProductModal('${p.id}')" title="Read verified reviews">
+                    <span class="star-icon">★</span> <b>${rating.avg}</b> <small>(${rating.count})</small>
+                  </button>
+                </div>
+                <h3 class="book-title" onclick="openProductModal('${p.id}')">${p.name}</h3>
+                <p class="book-desc" onclick="openProductModal('${p.id}')" title="Click to read full description">${cleanDesc}</p>
+                ${isLong ? `
+                  <button type="button" class="card-read-more" onclick="openProductModal('${p.id}')">
+                    Read full synopsis &amp; excerpts →
+                  </button>
+                ` : ''}
+              </div>
             </div>
 
             <div class="card-footer">
               <span class="price-tag">${money(p.price)}</span>
               <div style="display:flex; gap:10px; align-items:center">
-                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Reviews</button>
+                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Details</button>
                 <button class="btn-add-bag" onclick="addToCart('${p.id}')">Add to bag</button>
               </div>
             </div>
@@ -2332,6 +2393,9 @@
       // Courses
       document.getElementById('courseCards').innerHTML = products.filter(x => x.type === 'course').map((p, i) => {
         const rating = getOfferingRating(p.id);
+        const cleanDesc = (p.desc || '').replace(/\r?\n+/g, ' ').trim();
+        const isLong = cleanDesc.length > 90;
+
         return `
           <article class="course-card">
             <div>
@@ -2342,7 +2406,12 @@
                 </button>
               </div>
               <h3 class="course-title" onclick="openProductModal('${p.id}')">${p.name}</h3>
-              <p class="course-desc">${p.desc}</p>
+              <p class="course-desc" onclick="openProductModal('${p.id}')" title="Click to read full overview">${cleanDesc}</p>
+              ${isLong ? `
+                <button type="button" class="card-read-more" onclick="openProductModal('${p.id}')">
+                  Explore curriculum &amp; sangha →
+                </button>
+              ` : ''}
               
               <div class="course-badge-row">
                 <span class="course-chip">📖 ${p.kind}</span>
@@ -2354,7 +2423,7 @@
             <div class="card-footer">
               <span class="price-tag">${money(p.price)}</span>
               <div style="display:flex; gap:10px; align-items:center">
-                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Reviews</button>
+                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Details</button>
                 <button class="btn-add-bag" onclick="addToCart('${p.id}')">${money(p.price)} · Enrol</button>
               </div>
             </div>
@@ -2379,19 +2448,22 @@
 
       const modalContent = document.getElementById('productModalContent');
       modalContent.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:18px">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:20px; gap:16px">
           <div>
             <span class="book-tag" style="margin:0 0 6px">${p.kind}</span>
-            <h2 style="margin:0; font-family:'Cinzel', serif; font-size:28px">${p.name}</h2>
+            <h2 style="margin:2px 0 0; font-family:'Cinzel', serif; font-size:28px; line-height:1.2">${p.name}</h2>
           </div>
-          <b style="font-size:26px; color:var(--ink)">${money(p.price)}</b>
+          <div style="text-align:right; flex-shrink:0">
+            <span style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); display:block">Offering Price</span>
+            <b style="font-size:26px; color:var(--ink); line-height:1.1">${money(p.price)}</b>
+          </div>
         </div>
 
         <div class="modal-grid">
           <div>
             ${!isCourse ? `
               <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
-                   style="height:270px; margin-bottom:16px; ${isImg ? `background-image: url('${coverVal}');` : ''}">
+                   style="height:310px; margin-bottom:14px; ${isImg ? `background-image: url('${coverVal}');` : ''}">
                 ${isImg ? `
                   <div class="book-cover-overlay">
                     <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
@@ -2405,24 +2477,37 @@
                 `}
               </div>
             ` : `
-              <div class="modal-cover-box" style="margin-bottom:16px">
-                <span style="font-size:42px; color:var(--saffron); line-height:1">🪷</span>
-                <b style="font-size:16px; display:block; margin:8px 0 4px">${p.name}</b>
+              <div class="modal-cover-box" style="margin-bottom:14px; padding:32px 16px">
+                <span style="font-size:46px; color:var(--saffron); line-height:1">🪷</span>
+                <b style="font-size:17px; display:block; margin:8px 0 4px">${p.name}</b>
                 <small style="color:var(--muted)">${p.kind}</small>
               </div>
             `}
 
-            <div style="font-size:14px; line-height:1.65; color:#5c5246; margin-bottom:18px; white-space: pre-line;">${p.content || p.desc}</div>
-            
-            <button class="confirm-btn" style="margin-top:0" onclick="addToCart('${p.id}'); closeProductModal()">
+            <button class="confirm-btn" style="margin-top:0; width:100%" onclick="addToCart('${p.id}'); closeProductModal()">
               ${isCourse ? 'Enrol Now · ' : 'Add to Bag · '} ${money(p.price)}
             </button>
 
-            <button type="button" class="btn-wa-query" onclick="openWhatsAppQuery('product', '${(p.name || '').replace(/'/g, "\\'")}')">
+            <button type="button" class="btn-wa-query" style="width:100%" onclick="openWhatsAppQuery('product', '${(p.name || '').replace(/'/g, "\\'")}')">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.63c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.59.21-1.09.15-1.19-.06-.09-.22-.15-.47-.28z"/></svg>
-              Have a Query? Chat with Author
+              Chat with Author
             </button>
+
+            <div style="margin-top:14px; padding:12px 14px; background:#fbf8f0; border-radius:8px; border:1px dashed var(--line); font-size:12px; color:var(--muted); line-height:1.5">
+              ${!isCourse 
+                ? '📦 <b>Tracked Courier:</b> Carefully packaged and delivered across India with tracking updates.' 
+                : '👥 <b>Sangha Access:</b> Access verified WhatsApp community &amp; Google Meet study circles.'}
+            </div>
           </div>
+
+          <div>
+            <!-- Overview & Detailed Synopsis Card -->
+            <div class="modal-synopsis-card">
+              <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; color:var(--saffron); margin-bottom:10px">
+                ✦ ${!isCourse ? 'About this Sacred Edition &amp; Excerpts' : 'Course Overview &amp; Curriculum'}
+              </div>
+              <div class="modal-description-text">${p.content || p.desc}</div>
+            </div>
 
           <div>
             <!-- Rating Summary Banner -->
