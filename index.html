@@ -1644,8 +1644,28 @@
   <div id="toast">Copied to clipboard!</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase-config.js"></script>
   <script src="supabase-config.js"></script>
   <script>
+    function getDb() {
+      if (window._krishnismDb) return window._krishnismDb;
+      const dbConfig = window.KRISHNISM_SUPABASE || {
+        url: 'https://otlcarblkkuftzyxakfc.supabase.co',
+        publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
+        defaultUpiId: 'naman8080@ybl',
+        defaultUpiName: 'Krishnism'
+      };
+      if (window.supabase && dbConfig.url && dbConfig.publishableKey) {
+        try {
+          window._krishnismDb = window.supabase.createClient(dbConfig.url, dbConfig.publishableKey);
+          return window._krishnismDb;
+        } catch(e) {
+          console.error('Supabase createClient error:', e);
+        }
+      }
+      return null;
+    }
+
     // Legacy slug to UUID resolver mapping
     const legacySlugMap = {
       'book-krishnism': '8d9d5ace-44c6-416c-8a65-7eece051b381',
@@ -1679,15 +1699,6 @@
       defaultUpiId: 'naman8080@ybl',
       defaultUpiName: 'Krishnism'
     };
-
-    let db = null;
-    try {
-      if (window.supabase && dbConfig.url && dbConfig.publishableKey && dbConfig.url.startsWith('http') && !dbConfig.url.includes('YOUR_PROJECT_REF')) {
-        db = window.supabase.createClient(dbConfig.url, dbConfig.publishableKey);
-      }
-    } catch (e) {
-      console.warn('Supabase client init note:', e);
-    }
 
     // Store settings with default fallbacks
     let storeSettings = {
@@ -2108,9 +2119,10 @@
       });
 
       let orderNumber = 'KRI-' + String(Date.now()).slice(-6);
+      const client = getDb();
 
-      if (db) {
-        const { data: { user } } = await db.auth.getUser();
+      if (client) {
+        const { data: { user } } = await client.auth.getUser();
         if (!user) {
           alert('Please sign in or create an account first so you can track your order & access course materials.');
           location.href = 'account.html';
@@ -2128,7 +2140,7 @@
           };
         });
 
-        const { data: orderId, error } = await db.rpc('create_store_order', {
+        const { data: orderId, error } = await client.rpc('create_store_order', {
           p_customer: customer,
           p_items: orderItems
         });
@@ -2141,7 +2153,7 @@
         }
 
         // Update customer profile
-        await db.from('customer_profiles').update({
+        await client.from('customer_profiles').update({
           full_name: customer.name,
           phone: customer.phone,
           shipping_address: customer.address,
@@ -2151,7 +2163,7 @@
 
         if (orderId) {
           try {
-            const { data: ord } = await db.from('orders').select('order_number').eq('id', orderId).single();
+            const { data: ord } = await client.from('orders').select('order_number').eq('id', orderId).single();
             if (ord?.order_number) {
               orderNumber = ord.order_number;
             }
@@ -2194,16 +2206,17 @@
     }
 
     async function loadStorefront() {
-      if (!db) {
+      const client = getDb();
+      if (!client) {
         renderProducts();
         return;
       }
 
       try {
         const [offeringsRes, settingsRes, reviewsRes] = await Promise.all([
-          db.from('offerings').select('id,type,name,description,price,kind,cover,meet_url').eq('is_published', true).order('created_at'),
-          db.from('store_settings').select('*').single(),
-          db.from('reviews').select('*').eq('is_approved', true).order('created_at', { ascending: false })
+          client.from('offerings').select('id,type,name,description,price,kind,cover,meet_url').eq('is_published', true).order('created_at'),
+          client.from('store_settings').select('*').single(),
+          client.from('reviews').select('*').eq('is_approved', true).order('created_at', { ascending: false })
         ]);
 
         if (!offeringsRes.error && offeringsRes.data?.length) {

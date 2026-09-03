@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase-config.js"></script>
   <script src="supabase-config.js"></script>
   
   <style>
@@ -525,20 +526,23 @@
   <div id="toast">Review submitted successfully!</div>
 
   <script>
-    const cfg = window.KRISHNISM_SUPABASE || {
-      url: 'https://otlcarblkkuftzyxakfc.supabase.co',
-      publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
-      defaultUpiId: 'naman8080@ybl',
-      defaultUpiName: 'Krishnism'
-    };
-    
-    let db = null;
-    try {
-      if (window.supabase && cfg.url && cfg.publishableKey && cfg.url.startsWith('http') && !cfg.url.includes('YOUR_PROJECT_REF')) {
-        db = window.supabase.createClient(cfg.url, cfg.publishableKey);
+    function getDb() {
+      if (window._krishnismDb) return window._krishnismDb;
+      const cfg = window.KRISHNISM_SUPABASE || {
+        url: 'https://otlcarblkkuftzyxakfc.supabase.co',
+        publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
+        defaultUpiId: 'naman8080@ybl',
+        defaultUpiName: 'Krishnism'
+      };
+      if (window.supabase && cfg.url && cfg.publishableKey) {
+        try {
+          window._krishnismDb = window.supabase.createClient(cfg.url, cfg.publishableKey);
+          return window._krishnismDb;
+        } catch(e) {
+          console.error('Supabase createClient error:', e);
+        }
       }
-    } catch(e) {
-      console.warn('Supabase client init note:', e);
+      return null;
     }
 
     let storeSettings = {};
@@ -561,12 +565,13 @@
       const msg = document.getElementById('authMsg');
       msg.textContent = '';
 
-      if (!db) {
-        msg.textContent = 'Store database is not configured yet.';
+      const client = getDb();
+      if (!client) {
+        msg.textContent = 'Store database is initializing. Please try again.';
         return;
       }
 
-      const { data, error } = await db.auth.signInWithPassword({ email, password });
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
       if (error) {
         msg.textContent = error.message;
         return;
@@ -587,12 +592,13 @@
         return;
       }
 
-      if (!db) {
-        msg.textContent = 'Store database is not configured yet.';
+      const client = getDb();
+      if (!client) {
+        msg.textContent = 'Store database is initializing. Please try again.';
         return;
       }
 
-      const { data, error } = await db.auth.signUp({ email, password });
+      const { data, error } = await client.auth.signUp({ email, password });
       if (error) {
         msg.textContent = error.message;
       } else {
@@ -602,15 +608,24 @@
     }
 
     async function loginWithGoogle() {
-      if (!db) return alert('Supabase is not configured.');
-      await db.auth.signInWithOAuth({
+      const client = getDb();
+      if (!client) {
+        alert('Supabase client is not ready. Please refresh the page and try again.');
+        return;
+      }
+      const redirectUrl = window.location.origin + window.location.pathname;
+      const { data, error } = await client.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.href }
+        options: { redirectTo: redirectUrl }
       });
+      if (error) {
+        alert('Google Sign-In Error: ' + error.message);
+      }
     }
 
     async function handleSignOut() {
-      if (db) await db.auth.signOut();
+      const client = getDb();
+      if (client) await client.auth.signOut();
       location.reload();
     }
 
@@ -686,8 +701,9 @@
         updated_at: new Date().toISOString()
       };
 
-      if (db) {
-        const { error } = await db.from('reviews').upsert(reviewPayload, { onConflict: 'offering_id,user_id' });
+      const client = getDb();
+      if (client) {
+        const { error } = await client.from('reviews').upsert(reviewPayload, { onConflict: 'offering_id,user_id' });
         if (error) {
           alert('Could not submit review: ' + error.message);
           submitBtn.disabled = false;
@@ -714,14 +730,15 @@
     }
 
     async function loadAccountData(user) {
-      if (!db || !user) return;
+      const client = getDb();
+      if (!client || !user) return;
       currentAccountUser = user;
 
       // Fetch user orders, store settings & user reviews in parallel
       const [ordersRes, settingsRes, reviewsRes] = await Promise.all([
-        db.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }),
-        db.from('store_settings').select('*').single(),
-        db.from('reviews').select('*').eq('user_id', user.id)
+        client.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }),
+        client.from('store_settings').select('*').single(),
+        client.from('reviews').select('*').eq('user_id', user.id)
       ]);
 
       storeSettings = settingsRes.data || {};
@@ -866,25 +883,28 @@
     }
 
     // Fast session resolution with zero flash
-    if (db) {
-      db.auth.getSession().then(({ data: { session } }) => {
-        initSession(session?.user || null);
-      }).catch(() => {
-        initSession(null);
-      });
-
-      // Keep reactive on auth changes
-      db.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          if (session?.user) initSession(session.user);
-        } else if (event === 'SIGNED_OUT') {
+    function startAuthCheck() {
+      const client = getDb();
+      if (client) {
+        client.auth.getSession().then(({ data: { session } }) => {
+          initSession(session?.user || null);
+        }).catch(() => {
           initSession(null);
-        }
-      });
-    } else {
-      document.getElementById('loadingSection').classList.add('hidden');
-      document.getElementById('authSection').classList.remove('hidden');
+        });
+
+        // Keep reactive on auth changes
+        client.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+            if (session?.user) initSession(session.user);
+          } else if (event === 'SIGNED_OUT') {
+            initSession(null);
+          }
+        });
+      } else {
+        setTimeout(startAuthCheck, 100);
+      }
     }
+    startAuthCheck();
   </script>
 </body>
 </html>

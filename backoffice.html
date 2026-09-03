@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase-config.js"></script>
   <script src="supabase-config.js"></script>
   <style>
     :root {
@@ -494,20 +495,23 @@
   </main>
 
   <script>
-    const cfg = window.KRISHNISM_SUPABASE || {
-      url: 'https://otlcarblkkuftzyxakfc.supabase.co',
-      publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
-      defaultUpiId: 'naman8080@ybl',
-      defaultUpiName: 'Krishnism'
-    };
-    
-    let db = null;
-    try {
-      if (window.supabase && cfg.url && cfg.publishableKey && cfg.url.startsWith('http') && !cfg.url.includes('YOUR_PROJECT_REF')) {
-        db = window.supabase.createClient(cfg.url, cfg.publishableKey);
+    function getDb() {
+      if (window._krishnismDb) return window._krishnismDb;
+      const cfg = window.KRISHNISM_SUPABASE || {
+        url: 'https://otlcarblkkuftzyxakfc.supabase.co',
+        publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
+        defaultUpiId: 'naman8080@ybl',
+        defaultUpiName: 'Krishnism'
+      };
+      if (window.supabase && cfg.url && cfg.publishableKey) {
+        try {
+          window._krishnismDb = window.supabase.createClient(cfg.url, cfg.publishableKey);
+          return window._krishnismDb;
+        } catch(e) {
+          console.error('Supabase createClient error:', e);
+        }
       }
-    } catch(e) {
-      console.warn('Supabase client init note:', e);
+      return null;
     }
 
     let products = [];
@@ -532,12 +536,13 @@
       const errEl = document.getElementById('authError');
       errEl.textContent = '';
 
-      if (!db) {
-        errEl.textContent = 'Supabase database is not configured yet.';
+      const client = getDb();
+      if (!client) {
+        errEl.textContent = 'Supabase database is initializing. Please try again.';
         return;
       }
 
-      const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+      const { data, error } = await client.auth.signInWithPassword({ email, password: pass });
       if (error) {
         errEl.textContent = error.message;
         return;
@@ -546,24 +551,26 @@
     }
 
     async function handleSignOut() {
-      if (db) await db.auth.signOut();
+      const client = getDb();
+      if (client) await client.auth.signOut();
       location.reload();
     }
 
     async function loadDashboardData() {
-      if (!db) return;
-      const { data: { user } } = await db.auth.getUser();
+      const client = getDb();
+      if (!client) return;
+      const { data: { user } } = await client.auth.getUser();
       if (!user) return;
 
       document.getElementById('loginView').classList.add('hidden');
       document.getElementById('appView').classList.remove('hidden');
 
       const [pRes, oRes, sRes, cRes, rRes] = await Promise.all([
-        db.from('offerings').select('*').order('created_at', { ascending: false }),
-        db.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }),
-        db.from('store_settings').select('*').single(),
-        db.from('customer_profiles').select('*').order('created_at', { ascending: false }),
-        db.from('reviews').select('*').order('created_at', { ascending: false })
+        client.from('offerings').select('*').order('created_at', { ascending: false }),
+        client.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }),
+        client.from('store_settings').select('*').single(),
+        client.from('customer_profiles').select('*').order('created_at', { ascending: false }),
+        client.from('reviews').select('*').order('created_at', { ascending: false })
       ]);
 
       if (oRes.error && (oRes.error.code === '42501' || oRes.error.message?.includes('policy') || oRes.error.message?.includes('permission'))) {
