@@ -525,10 +525,21 @@
   <div id="toast">Review submitted successfully!</div>
 
   <script>
-    const cfg = window.KRISHNISM_SUPABASE || {};
-    const db = (cfg.url && !cfg.url.includes('YOUR_PROJECT_REF'))
-      ? window.supabase.createClient(cfg.url, cfg.publishableKey)
-      : null;
+    const cfg = window.KRISHNISM_SUPABASE || {
+      url: 'https://otlcarblkkuftzyxakfc.supabase.co',
+      publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
+      defaultUpiId: 'naman8080@ybl',
+      defaultUpiName: 'Krishnism'
+    };
+    
+    let db = null;
+    try {
+      if (window.supabase && cfg.url && cfg.publishableKey && cfg.url.startsWith('http') && !cfg.url.includes('YOUR_PROJECT_REF')) {
+        db = window.supabase.createClient(cfg.url, cfg.publishableKey);
+      }
+    } catch(e) {
+      console.warn('Supabase client init note:', e);
+    }
 
     let storeSettings = {};
     let userReviews = [];
