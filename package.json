@@ -1,0 +1,9 @@
+{
+  "name": "krishnism",
+  "version": "1.0.0",
+  "description": "Krishnism luxury storefront and student sanctuary",
+  "private": true,
+  "scripts": {
+    "build": "node build.js"
+  }
+}
