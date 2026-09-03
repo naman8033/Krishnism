@@ -476,10 +476,10 @@
             </div>
           </div>
 
-          <label style="font-size:12.5px; font-weight:700">Support / Owner WhatsApp Number (For Customer Queries)</label>
+          <label style="font-size:12.5px; font-weight:700">Support / Author WhatsApp Number (For Customer Queries)</label>
           <input id="settingSupportWa" placeholder="e.g. 919876543210 (include country code)">
           <small style="display:block; color:var(--muted); margin-top:-8px; margin-bottom:14px; font-size:11.5px">
-            💬 When customers click 'Have a query? Chat with owner' on the store or dashboard, WhatsApp will open directly to this number.
+            💬 When customers click 'Have a query? Chat with author' on the store or dashboard, WhatsApp will open directly to this number.
           </small>
 
           <label style="font-size:12.5px; font-weight:700">WhatsApp Community / Study Group Invite Link</label>
@@ -494,7 +494,52 @@
           <label style="font-size:12.5px; font-weight:700">Student Welcome Message</label>
           <textarea id="settingWelcome" rows="3" placeholder="Welcome to the Krishnism study circle..."></textarea>
 
-          <button type="submit" class="btn-saffron" style="margin-top:10px">Save Settings</button>
+          <!-- Meet the Author Profile Configuration -->
+          <div style="border-top: 1px solid var(--line); margin: 24px 0 20px; padding-top: 18px">
+            <h3 style="font-family:'Cormorant Garamond',serif; font-size:20px; margin:0 0 6px; color:var(--ink)">
+              ✍️ Meet the Author Profile (Gourav Sharma)
+            </h3>
+            <p style="font-size:12.5px; color:var(--muted); margin:0 0 16px">
+              Control the author showcase section displayed on the main storefront.
+            </p>
+
+            <div class="form-row">
+              <div>
+                <label style="font-size:12.5px; font-weight:700">Author Full Name *</label>
+                <input id="settingAuthorName" required placeholder="Gourav Sharma">
+              </div>
+              <div>
+                <label style="font-size:12.5px; font-weight:700">Author Title / Subtitle</label>
+                <input id="settingAuthorTitle" placeholder="Author, Seeker &amp; Dedicated Practitioner">
+              </div>
+            </div>
+
+            <label style="font-size:12.5px; font-weight:700">Author Photo (Upload File or Enter Image URL)</label>
+            <div style="display:flex; gap:12px; align-items:center; margin-bottom:12px; flex-wrap:wrap">
+              <input type="file" id="authorFileInput" accept="image/*" onchange="handleAuthorFileSelect(event)" style="font-size:12.5px; flex:1">
+              <span style="font-size:12px; color:var(--muted)">or URL:</span>
+              <input id="settingAuthorImage" placeholder="https://example.com/author.jpg" oninput="previewAuthorImage(this.value)" style="flex:2">
+            </div>
+
+            <div id="authorPreviewBox" style="margin-bottom:16px; display:flex; align-items:center; gap:14px; background:#f9f6f0; padding:12px; border-radius:10px; border:1px dashed #d9ccb6">
+              <img id="authorImgPreview" src="" alt="Author Preview" style="width:64px; height:64px; border-radius:50%; object-fit:cover; display:none; border:2px solid var(--gold)">
+              <div id="authorImgNoPreview" style="width:64px; height:64px; border-radius:50%; background:#2c241b; color:#ecd9b5; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px">
+                GS
+              </div>
+              <div>
+                <b style="font-size:13.5px; display:block" id="authorPreviewNameText">Gourav Sharma</b>
+                <small style="color:var(--muted); font-size:11.5px">Author photo preview for the storefront</small>
+              </div>
+            </div>
+
+            <label style="font-size:12.5px; font-weight:700">Author Biography &amp; Background</label>
+            <textarea id="settingAuthorBio" rows="4" placeholder="Gourav Sharma is the author of all books published under Krishnism..."></textarea>
+
+            <label style="font-size:12.5px; font-weight:700">Author Personal Quote / Reflection</label>
+            <textarea id="settingAuthorQuote" rows="2" placeholder="Every word in these books was born from quiet contemplation..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-saffron" style="margin-top:10px">Save Settings &amp; Author Profile</button>
         </form>
       </div>
     </section>
@@ -953,6 +998,41 @@
       document.getElementById('settingWa').value = storeSettings.whatsapp_group_url || '';
       document.getElementById('settingMeet').value = storeSettings.default_meet_url || '';
       document.getElementById('settingWelcome').value = storeSettings.student_welcome || '';
+
+      // Author Profile fields
+      document.getElementById('settingAuthorName').value = storeSettings.author_name || 'Gourav Sharma';
+      document.getElementById('settingAuthorTitle').value = storeSettings.author_title || 'Author, Seeker & Dedicated Practitioner';
+      document.getElementById('settingAuthorImage').value = storeSettings.author_image_url || '';
+      document.getElementById('settingAuthorBio').value = storeSettings.author_bio || `Gourav Sharma is the author of all books published under Krishnism, including Krishnism, Gita Reflections, and The Way of Devotion.\n\nHis writings emerge from years of deep study, meditation, and a heartfelt conviction that the sublime wisdom of the Bhagavad Gita should not remain distant philosophy, but become a practical, living sanctuary for contemporary everyday life.\n\nThrough handcrafted collector book editions and intimate WhatsApp guided cohorts, Gourav personally walks alongside seekers across the country—fostering stillness, clarity, and devotion.`;
+      document.getElementById('settingAuthorQuote').value = storeSettings.author_quote || 'Every word in these books was born from quiet contemplation, deep devotion, and a sincere longing to make the eternal wisdom of Krishna accessible to every seeking heart.';
+      
+      document.getElementById('authorPreviewNameText').textContent = storeSettings.author_name || 'Gourav Sharma';
+      previewAuthorImage(storeSettings.author_image_url);
+    }
+
+    function previewAuthorImage(url) {
+      const img = document.getElementById('authorImgPreview');
+      const placeholder = document.getElementById('authorImgNoPreview');
+      if (url && (url.startsWith('http') || url.startsWith('data:image'))) {
+        img.src = url;
+        img.style.display = 'block';
+        placeholder.style.display = 'none';
+      } else {
+        img.style.display = 'none';
+        placeholder.style.display = 'flex';
+      }
+    }
+
+    function handleAuthorFileSelect(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const dataUrl = evt.target.result;
+        document.getElementById('settingAuthorImage').value = dataUrl;
+        previewAuthorImage(dataUrl);
+      };
+      reader.readAsDataURL(file);
     }
 
     function toggleProductForm() {
@@ -1078,6 +1158,13 @@
       const meet = document.getElementById('settingMeet').value.trim();
       const welcome = document.getElementById('settingWelcome').value.trim();
 
+      // Author Profile fields
+      const authorName = document.getElementById('settingAuthorName').value.trim();
+      const authorTitle = document.getElementById('settingAuthorTitle').value.trim();
+      const authorImage = document.getElementById('settingAuthorImage').value.trim();
+      const authorBio = document.getElementById('settingAuthorBio').value.trim();
+      const authorQuote = document.getElementById('settingAuthorQuote').value.trim();
+
       const client = getDb();
       if (!client) {
         alert('Supabase client not ready.');
@@ -1091,7 +1178,12 @@
         support_whatsapp: supportWa || null,
         whatsapp_group_url: wa || null,
         default_meet_url: meet || null,
-        student_welcome: welcome || null
+        student_welcome: welcome || null,
+        author_name: authorName || 'Gourav Sharma',
+        author_title: authorTitle || null,
+        author_image_url: authorImage || null,
+        author_bio: authorBio || null,
+        author_quote: authorQuote || null
       }).select();
 
       if (error) {
@@ -1099,7 +1191,7 @@
       } else if (!data || data.length === 0) {
         alert('Permission Denied by Supabase: Check is_store_admin in SQL.');
       } else {
-        showToast('Store, UPI & WhatsApp settings updated successfully! ✨');
+        showToast('Store & Author Profile updated successfully! ✨');
       }
     }
 
