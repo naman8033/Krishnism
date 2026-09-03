@@ -1647,17 +1647,27 @@
   <script src="/supabase-config.js"></script>
   <script src="supabase-config.js"></script>
   <script>
+    function normalizeSupabaseUrl(url) {
+      if (!url) return 'https://otlcarblkkuftzyxakfc.supabase.co';
+      let u = String(url).trim();
+      if (!u.startsWith('http://') && !u.startsWith('https://')) {
+        if (u.includes('.supabase.co')) return 'https://' + u;
+        return 'https://' + u + '.supabase.co';
+      }
+      return u;
+    }
+
     function getDb() {
       if (window._krishnismDb) return window._krishnismDb;
-      const dbConfig = window.KRISHNISM_SUPABASE || {
-        url: 'https://otlcarblkkuftzyxakfc.supabase.co',
-        publishableKey: 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj',
-        defaultUpiId: 'naman8080@ybl',
-        defaultUpiName: 'Krishnism'
-      };
-      if (window.supabase && dbConfig.url && dbConfig.publishableKey) {
+      const rawCfg = window.KRISHNISM_SUPABASE || {};
+      const targetUrl = normalizeSupabaseUrl(rawCfg.url);
+      const targetKey = (rawCfg.publishableKey && !rawCfg.publishableKey.includes('YOUR_SUPABASE'))
+        ? rawCfg.publishableKey
+        : 'sb_publishable_kXu0LNQ0bYsYOhB1aAF0Hg_f0nbMrTj';
+
+      if (window.supabase) {
         try {
-          window._krishnismDb = window.supabase.createClient(dbConfig.url, dbConfig.publishableKey);
+          window._krishnismDb = window.supabase.createClient(targetUrl, targetKey);
           return window._krishnismDb;
         } catch(e) {
           console.error('Supabase createClient error:', e);
