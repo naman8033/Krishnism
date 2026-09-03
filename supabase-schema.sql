@@ -16,6 +16,8 @@ create table if not exists public.offerings (
   updated_at timestamptz not null default now()
 );
 
+alter table public.offerings add column if not exists content text;
+
 create table if not exists public.store_settings (
   id boolean primary key default true check (id),
   whatsapp_group_url text,

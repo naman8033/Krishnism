@@ -410,45 +410,138 @@
 
     <!-- TAB 2: Books & Courses -->
     <section id="productsTab" class="view">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-        <h2 style="font-family:'Cormorant Garamond'; font-size:28px; margin:0">Catalog Offerings</h2>
-        <button onclick="toggleProductForm()" class="btn-saffron">+ Add New Offering</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond'; font-size:28px; margin:0">Catalog Offerings</h2>
+          <p style="color:var(--muted); font-size:13.5px; margin:2px 0 0">Manage book editions, custom cover artwork, pricing, and detailed content.</p>
+        </div>
+        <button onclick="openAddProduct()" class="btn-saffron">+ Add New Offering</button>
       </div>
 
-      <!-- Add Product Form -->
-      <div id="productFormCard" class="card hidden" style="margin-bottom:24px; border:2px dashed var(--saffron)">
-        <h3 id="formTitle">Add New Offering</h3>
+      <!-- Add/Edit Product Form -->
+      <div id="productFormCard" class="card hidden" style="margin-bottom:28px; border:2px solid var(--saffron); background: #fffdf9; box-shadow: 0 10px 30px rgba(190, 92, 37, 0.08);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px">
+          <div>
+            <div id="formModeBadge" style="display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; background:var(--cream); color:var(--saffron); padding:3px 8px; border-radius:4px; margin-bottom:4px">
+              New Offering
+            </div>
+            <h3 id="formTitle" style="margin:0; font-size:26px">Add New Offering</h3>
+            <p id="formSubtitle" style="color:var(--muted); font-size:13px; margin:2px 0 0">
+              Configure book details, custom cover artwork/image, pricing, and content.
+            </p>
+          </div>
+          <button type="button" onclick="closeProductForm()" class="btn-outline" style="padding:4px 12px; font-size:12px">✕ Close</button>
+        </div>
+
         <form onsubmit="saveProduct(event)">
           <input type="hidden" id="prodEditId">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+
+          <!-- Row 1: Type & Price & Status -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:14px">
             <div>
-              <label style="font-size:12px; font-weight:600">Offering Type</label>
-              <select id="prodType" required>
-                <option value="book">Book (Physical)</option>
-                <option value="course">Course (Online / Cohort)</option>
+              <label style="font-size:12px; font-weight:700">Offering Type *</label>
+              <select id="prodType" required onchange="handleTypeChange()">
+                <option value="book">📖 Book (Physical Edition)</option>
+                <option value="course">🎓 Course (Online / Sangha Cohort)</option>
               </select>
             </div>
             <div>
-              <label style="font-size:12px; font-weight:600">Price (INR)</label>
+              <label style="font-size:12px; font-weight:700">Price in INR (₹) *</label>
               <input id="prodPrice" type="number" required placeholder="399" min="0">
             </div>
-          </div>
-          <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px">
             <div>
-              <label style="font-size:12px; font-weight:600">Title / Name</label>
-              <input id="prodName" required placeholder="e.g. Gita Reflections">
-            </div>
-            <div>
-              <label style="font-size:12px; font-weight:600">Kind / Badge</label>
-              <input id="prodKind" required placeholder="Paperback / 8 sessions">
+              <label style="font-size:12px; font-weight:700">Store Visibility</label>
+              <select id="prodPublished">
+                <option value="true">🌟 Published (Visible on Store)</option>
+                <option value="false">🔒 Draft / Hidden</option>
+              </select>
             </div>
           </div>
-          <label style="font-size:12px; font-weight:600">Description</label>
-          <textarea id="prodDesc" required rows="3" placeholder="Summary of this book or course..."></textarea>
-          
-          <div style="display:flex; gap:10px; margin-top:10px">
-            <button type="submit" class="btn-saffron">Save Offering</button>
-            <button type="button" class="btn-outline" onclick="toggleProductForm()">Cancel</button>
+
+          <!-- Row 2: Title & Kind / Badge -->
+          <div style="display:grid; grid-template-columns:2fr 1fr; gap:14px">
+            <div>
+              <label style="font-size:12px; font-weight:700">Book / Offering Title *</label>
+              <input id="prodName" required placeholder="e.g. Krishnism, Gita Reflections" oninput="updateCoverPreview()">
+            </div>
+            <div>
+              <label style="font-size:12px; font-weight:700">Kind / Edition Badge *</label>
+              <input id="prodKind" required placeholder="Collector Paperback, Daily Contemplation" oninput="updateCoverPreview()">
+            </div>
+          </div>
+
+          <!-- Cover Image Section -->
+          <div style="background: #fdfaf4; border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin: 6px 0 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px">
+              <label style="font-size:13px; font-weight:700; margin:0">
+                🖼️ Book Cover Artwork / Image
+              </label>
+              <span style="font-size:11.5px; color:var(--muted)">Supports image upload, URL, or foil themes</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 140px; gap: 18px; align-items: start;">
+              <div>
+                <div style="margin-bottom:10px">
+                  <span style="font-size:12px; font-weight:600; color:var(--ink)">Upload Image File</span>
+                  <input type="file" id="coverFileInput" accept="image/*" onchange="handleCoverFileSelect(event)" style="font-size:12.5px; padding:8px; margin:4px 0 8px">
+                </div>
+
+                <div style="margin-bottom:10px">
+                  <span style="font-size:12px; font-weight:600; color:var(--ink)">Or enter Image URL / Theme</span>
+                  <input id="prodCover" placeholder="https://example.com/cover.jpg or data:image/... or green/blue" oninput="updateCoverPreview()" style="margin:4px 0 6px">
+                  <small style="display:block; color:var(--muted); font-size:11.5px">
+                    Direct public image URL, uploaded image, or classic foil theme class.
+                  </small>
+                </div>
+
+                <div>
+                  <span style="font-size:11.5px; font-weight:600; color:var(--muted)">Classic foil themes:</span>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px">
+                    <button type="button" class="btn-outline" style="padding:4px 10px; font-size:11px" onclick="setCoverPreset('')">🌟 Classic Gold</button>
+                    <button type="button" class="btn-outline" style="padding:4px 10px; font-size:11px" onclick="setCoverPreset('green')">🌿 Forest Green</button>
+                    <button type="button" class="btn-outline" style="padding:4px 10px; font-size:11px" onclick="setCoverPreset('blue')">🌌 Cosmic Blue</button>
+                    <button type="button" class="btn-outline" style="padding:4px 10px; font-size:11px" onclick="clearCoverImage()">✕ Clear</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Live Cover Preview Box -->
+              <div style="text-align:center">
+                <div style="font-size:11px; font-weight:700; color:var(--muted); margin-bottom:4px; text-transform:uppercase">Preview</div>
+                <div id="coverPreviewBox" style="width:130px; height:180px; border-radius:4px 8px 8px 4px; border-left:4px solid #d4a036; box-shadow: -2px 6px 16px rgba(0,0,0,0.18); display:flex; flex-direction:column; justify-content:space-between; padding:12px 10px; color:#fff; position:relative; overflow:hidden; background: var(--dark-gradient); transition: all .2s ease; margin:auto;">
+                  <small id="previewSub" style="font-size:8px; letter-spacing:.15em; color:var(--gold-light); text-transform:uppercase">KRISHNISM</small>
+                  <strong id="previewTitle" style="font-family:'Cormorant Garamond',serif; font-size:14px; line-height:1.1; margin:4px 0">Title</strong>
+                  <small id="previewFoot" style="font-size:8px; color:#e0d3c0">READ · REFLECT</small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description / Summary -->
+          <label style="font-size:12.5px; font-weight:700">Short Summary / Tagline * (Appears on Catalog Card)</label>
+          <input id="prodDesc" required placeholder="A companion for bringing Krishna consciousness into everyday life.">
+
+          <!-- Full Content / Book Overview / Excerpt -->
+          <label style="font-size:12.5px; font-weight:700; margin-top:6px; display:block">
+            Detailed Book Content &amp; Overview (Appears in Details Modal)
+          </label>
+          <textarea id="prodContent" rows="5" placeholder="Write full book synopsis, chapter overview, themes, reflections, or sample excerpts. Paragraphs and line breaks are preserved!"></textarea>
+          <small style="display:block; color:var(--muted); margin-top:-8px; margin-bottom:14px; font-size:11.5px">
+            💡 When customers click on the book to read more, this detailed content is displayed in full on the storefront.
+          </small>
+
+          <!-- Course Only Meet Link -->
+          <div id="courseMeetField" style="display:none; margin-bottom:14px">
+            <label style="font-size:12px; font-weight:700">Google Meet URL / Class Link (For Courses)</label>
+            <input id="prodMeetUrl" placeholder="https://meet.google.com/xyz-abc-def">
+          </div>
+
+          <!-- Buttons -->
+          <div style="display:flex; gap:12px; align-items:center; margin-top:16px; border-top:1px solid var(--line); padding-top:14px">
+            <button id="saveProdBtn" type="submit" class="btn-saffron" style="padding:10px 24px; font-size:14px">
+              Save Offering
+            </button>
+            <button type="button" class="btn-outline" onclick="closeProductForm()">Cancel</button>
           </div>
         </form>
       </div>
@@ -574,6 +667,15 @@
       }
       return null;
     }
+
+    const db = new Proxy({}, {
+      get(target, prop) {
+        const client = getDb();
+        if (!client) return undefined;
+        const val = client[prop];
+        return typeof val === 'function' ? val.bind(client) : val;
+      }
+    });
 
     let products = [];
     let orders = [];
@@ -893,27 +995,80 @@
           ? (prodReviews.reduce((sum, r) => sum + Number(r.rating || 5), 0) / prodReviews.length).toFixed(1)
           : '5.0';
 
+        const isBook = p.type === 'book';
+        const coverVal = (p.cover || '').trim();
+        const isImg = coverVal.startsWith('http') || coverVal.startsWith('data:image') || coverVal.startsWith('/');
+        const hasTheme = coverVal === 'green' || coverVal === 'blue';
+
+        // Miniature book cover styling
+        let thumbStyle = 'background: var(--dark-gradient); border-left: 3px solid #d4a036;';
+        if (isImg) {
+          thumbStyle = `background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.65)), url('${coverVal}') center/cover no-repeat; border-left: 3px solid #d4a036;`;
+        } else if (coverVal === 'green') {
+          thumbStyle = 'background: linear-gradient(145deg, #1d3326 0%, #102117 100%); border-left: 3px solid #55a878;';
+        } else if (coverVal === 'blue') {
+          thumbStyle = 'background: linear-gradient(145deg, #1b263b 0%, #0d1522 100%); border-left: 3px solid #5d8bc9;';
+        }
+
         return `
-          <div class="card">
-            <div style="display:flex; justify-content:space-between; align-items:center">
-              <span class="status-badge ${p.is_published ? 'status-paid' : 'status-cancelled'}">
-                ${p.is_published ? 'Published' : 'Draft / Hidden'}
-              </span>
-              <div style="display:flex; align-items:center; gap:6px">
-                <span style="font-size:12px; font-weight:700; color:#d97706">★ ${avgRating}</span>
-                <small style="color:var(--muted); font-size:11px">(${prodReviews.length} reviews)</small>
-                <small style="text-transform:uppercase; font-size:11px; font-weight:700; color:var(--muted); margin-left:4px">${p.type}</small>
+          <div class="card" style="display:flex; flex-direction:column; justify-content:space-between">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+                <span class="status-badge ${p.is_published ? 'status-paid' : 'status-cancelled'}">
+                  ${p.is_published ? 'Published' : 'Draft / Hidden'}
+                </span>
+                <div style="display:flex; align-items:center; gap:6px">
+                  <span style="font-size:12px; font-weight:700; color:#d97706">★ ${avgRating}</span>
+                  <small style="color:var(--muted); font-size:11px">(${prodReviews.length})</small>
+                  <span class="tag-pill ${isBook ? 'tag-book' : 'tag-course'}" style="margin:0 0 0 4px">${p.type.toUpperCase()}</span>
+                </div>
+              </div>
+
+              <!-- Product Details with Mini Cover -->
+              <div style="display:flex; gap:14px; align-items:flex-start; margin-bottom:12px">
+                <div style="width:64px; height:90px; flex-shrink:0; border-radius:3px 6px 6px 3px; box-shadow:0 4px 12px rgba(0,0,0,0.15); display:flex; flex-direction:column; justify-content:space-between; padding:6px 5px; color:#fff; overflow:hidden; ${thumbStyle}">
+                  <span style="font-size:6.5px; letter-spacing:0.08em; color:var(--gold-light); text-transform:uppercase">KRISHNISM</span>
+                  <span style="font-family:'Cormorant Garamond',serif; font-size:9.5px; line-height:1; font-weight:700">${p.name.slice(0, 16)}</span>
+                  <span style="font-size:6px; color:#e0d3c0">●</span>
+                </div>
+
+                <div style="flex:1; min-width:0">
+                  <span style="font-size:11px; font-weight:700; color:var(--saffron); text-transform:uppercase; letter-spacing:0.04em">${p.kind || ''}</span>
+                  <h3 style="margin:2px 0 6px; font-size:19px; line-height:1.2">${p.name}</h3>
+                  <p style="font-size:12.5px; color:var(--muted); margin:0 0 8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.4">
+                    ${p.description || 'No description provided.'}
+                  </p>
+                  <div>
+                    ${isImg ? `
+                      <small style="display:inline-flex; align-items:center; gap:4px; font-size:11px; color:#155724; background:#e8f5e9; padding:2px 6px; border-radius:4px">
+                        🖼️ Custom Cover Attached
+                      </small>
+                    ` : (hasTheme ? `
+                      <small style="display:inline-flex; align-items:center; gap:4px; font-size:11px; color:#0c5460; background:#e8f4fd; padding:2px 6px; border-radius:4px">
+                        🎨 Foil Theme: ${coverVal}
+                      </small>
+                    ` : `
+                      <small style="display:inline-flex; align-items:center; gap:4px; font-size:11px; color:var(--muted); background:var(--cream); padding:2px 6px; border-radius:4px">
+                        🌟 Classic Gold Foil
+                      </small>
+                    `)}
+                  </div>
+                </div>
               </div>
             </div>
-            <h3>${p.name}</h3>
-            <p>${p.description}</p>
+
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:12px; margin-top:12px">
               <b style="font-size:17px">${money(p.price)}</b>
               <div style="display:flex; gap:6px">
-                <button class="btn-outline" style="padding:6px 12px; font-size:12px" onclick="togglePublish('${p.id}', ${p.is_published})">
+                <button class="btn-saffron" style="padding:6px 14px; font-size:12px" onclick="openEditProduct('${p.id}')">
+                  ✏️ Edit
+                </button>
+                <button class="btn-outline" style="padding:6px 10px; font-size:12px" onclick="togglePublish('${p.id}', ${p.is_published})">
                   ${p.is_published ? 'Hide' : 'Publish'}
                 </button>
-                <button class="btn-danger" style="padding:6px 10px; font-size:12px" onclick="deleteProduct('${p.id}')">Delete</button>
+                <button class="btn-danger" style="padding:6px 10px; font-size:12px" onclick="deleteProduct('${p.id}')" title="Delete offering">
+                  Delete
+                </button>
               </div>
             </div>
           </div>
@@ -1035,32 +1190,237 @@
       reader.readAsDataURL(file);
     }
 
-    function toggleProductForm() {
+    function openAddProduct() {
       const card = document.getElementById('productFormCard');
-      card.classList.toggle('hidden');
+      card.classList.remove('hidden');
+
+      document.getElementById('formModeBadge').textContent = 'New Offering';
+      document.getElementById('formModeBadge').style.background = 'var(--cream)';
+      document.getElementById('formModeBadge').style.color = 'var(--saffron)';
+      document.getElementById('formTitle').textContent = 'Add New Offering';
+      document.getElementById('formSubtitle').textContent = 'Configure book details, custom cover artwork/image, pricing, and content.';
+      document.getElementById('saveProdBtn').textContent = 'Save Offering';
+
+      document.getElementById('prodEditId').value = '';
+      document.getElementById('prodType').value = 'book';
+      document.getElementById('prodPrice').value = '';
+      document.getElementById('prodPublished').value = 'true';
+      document.getElementById('prodName').value = '';
+      document.getElementById('prodKind').value = '';
+      document.getElementById('prodCover').value = '';
+      document.getElementById('prodDesc').value = '';
+      document.getElementById('prodContent').value = '';
+      document.getElementById('prodMeetUrl').value = '';
+      const fileInput = document.getElementById('coverFileInput');
+      if (fileInput) fileInput.value = '';
+
+      handleTypeChange();
+      updateCoverPreview();
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function openEditProduct(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+
+      const card = document.getElementById('productFormCard');
+      card.classList.remove('hidden');
+
+      const isCourse = p.type === 'course';
+      document.getElementById('formModeBadge').textContent = 'Edit Mode';
+      document.getElementById('formModeBadge').style.background = '#fde8d7';
+      document.getElementById('formModeBadge').style.color = '#9e3f08';
+      document.getElementById('formTitle').textContent = `Edit ${isCourse ? 'Course' : 'Book'}: ${p.name}`;
+      document.getElementById('formSubtitle').textContent = `Editing ID: ${p.id}. Changes will reflect across the store upon saving.`;
+      document.getElementById('saveProdBtn').textContent = `Update ${isCourse ? 'Course' : 'Book'}`;
+
+      document.getElementById('prodEditId').value = p.id;
+      document.getElementById('prodType').value = p.type || 'book';
+      document.getElementById('prodPrice').value = p.price ?? 0;
+      document.getElementById('prodPublished').value = p.is_published ? 'true' : 'false';
+      document.getElementById('prodName').value = p.name || '';
+      document.getElementById('prodKind').value = p.kind || '';
+      document.getElementById('prodCover').value = p.cover || '';
+      document.getElementById('prodDesc').value = p.description || p.desc || '';
+      document.getElementById('prodContent').value = p.content || '';
+      document.getElementById('prodMeetUrl').value = p.meet_url || '';
+      const fileInput = document.getElementById('coverFileInput');
+      if (fileInput) fileInput.value = '';
+
+      handleTypeChange();
+      updateCoverPreview();
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeProductForm() {
+      document.getElementById('productFormCard').classList.add('hidden');
+      document.getElementById('prodEditId').value = '';
+    }
+
+    function handleTypeChange() {
+      const type = document.getElementById('prodType')?.value;
+      const meetField = document.getElementById('courseMeetField');
+      if (meetField) {
+        meetField.style.display = type === 'course' ? 'block' : 'none';
+      }
+    }
+
+    function handleCoverFileSelect(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const dataUrl = evt.target.result;
+        document.getElementById('prodCover').value = dataUrl;
+        updateCoverPreview();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function setCoverPreset(preset) {
+      document.getElementById('prodCover').value = preset;
+      const fileInput = document.getElementById('coverFileInput');
+      if (fileInput) fileInput.value = '';
+      updateCoverPreview();
+    }
+
+    function clearCoverImage() {
+      document.getElementById('prodCover').value = '';
+      const fileInput = document.getElementById('coverFileInput');
+      if (fileInput) fileInput.value = '';
+      updateCoverPreview();
+    }
+
+    function updateCoverPreview() {
+      const coverVal = (document.getElementById('prodCover')?.value || '').trim();
+      const nameVal = document.getElementById('prodName')?.value || 'Title';
+      const box = document.getElementById('coverPreviewBox');
+      const titleEl = document.getElementById('previewTitle');
+      const subEl = document.getElementById('previewSub');
+      const footEl = document.getElementById('previewFoot');
+
+      if (!box) return;
+      if (titleEl) titleEl.textContent = nameVal;
+
+      const isImg = coverVal.startsWith('http') || coverVal.startsWith('data:image') || coverVal.startsWith('/');
+
+      if (isImg) {
+        box.style.backgroundImage = `linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%), url('${coverVal}')`;
+        box.style.backgroundSize = 'cover';
+        box.style.backgroundPosition = 'center';
+        box.style.borderLeft = '4px solid #d4a036';
+      } else if (coverVal === 'green') {
+        box.style.backgroundImage = 'linear-gradient(145deg, #1d3326 0%, #102117 100%)';
+        box.style.borderLeft = '4px solid #55a878';
+      } else if (coverVal === 'blue') {
+        box.style.backgroundImage = 'linear-gradient(145deg, #1b263b 0%, #0d1522 100%)';
+        box.style.borderLeft = '4px solid #5d8bc9';
+      } else {
+        box.style.backgroundImage = 'linear-gradient(145deg, #1e1913 0%, #110e0b 100%)';
+        box.style.borderLeft = '4px solid #d4a036';
+      }
     }
 
     async function saveProduct(e) {
       e.preventDefault();
-      const slug = document.getElementById('prodName').value.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString().slice(-4);
-      const newOffering = {
-        slug,
-        type: document.getElementById('prodType').value,
-        name: document.getElementById('prodName').value.trim(),
-        price: parseInt(document.getElementById('prodPrice').value, 10),
-        kind: document.getElementById('prodKind').value.trim(),
-        description: document.getElementById('prodDesc').value.trim(),
-        is_published: true
-      };
-
-      const { error } = await db.from('offerings').insert(newOffering);
-      if (error) {
-        alert('Error adding offering: ' + error.message);
+      const client = getDb();
+      if (!client) {
+        alert('Supabase client is not ready. Please refresh or check connection.');
         return;
       }
-      alert('Offering added successfully!');
-      toggleProductForm();
-      loadDashboardData();
+
+      const editId = document.getElementById('prodEditId').value;
+      const type = document.getElementById('prodType').value;
+      const name = document.getElementById('prodName').value.trim();
+      const price = parseInt(document.getElementById('prodPrice').value, 10);
+      const kind = document.getElementById('prodKind').value.trim();
+      const cover = document.getElementById('prodCover').value.trim();
+      const desc = document.getElementById('prodDesc').value.trim();
+      const content = document.getElementById('prodContent')?.value.trim() || '';
+      const meetUrl = document.getElementById('prodMeetUrl')?.value.trim() || null;
+      const isPublished = document.getElementById('prodPublished').value === 'true';
+
+      const saveBtn = document.getElementById('saveProdBtn');
+      const originalText = saveBtn.textContent;
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Saving...';
+
+      try {
+        if (editId) {
+          // UPDATE EXISTING PRODUCT
+          const updateData = {
+            type,
+            name,
+            price,
+            kind,
+            cover,
+            description: desc,
+            meet_url: type === 'course' ? meetUrl : null,
+            is_published: isPublished,
+            updated_at: new Date().toISOString()
+          };
+          if (content) updateData.content = content;
+
+          let res = await client.from('offerings').update(updateData).eq('id', editId).select();
+
+          // Fallback if content column doesn't exist on remote db yet (code 42703)
+          if (res.error && (res.error.code === '42703' || res.error.message?.includes('content'))) {
+            delete updateData.content;
+            res = await client.from('offerings').update(updateData).eq('id', editId).select();
+          }
+
+          if (res.error) {
+            alert('Error updating offering: ' + res.error.message);
+            return;
+          }
+
+          if (!res.data || res.data.length === 0) {
+            alert('Update blocked: You need admin permissions in Supabase (check is_store_admin).');
+            return;
+          }
+
+          showToast(`✨ ${type === 'course' ? 'Course' : 'Book'} "${name}" updated successfully!`);
+          closeProductForm();
+          loadDashboardData();
+        } else {
+          // INSERT NEW PRODUCT
+          const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString().slice(-4);
+          const insertData = {
+            slug,
+            type,
+            name,
+            price,
+            kind,
+            cover,
+            description: desc,
+            meet_url: type === 'course' ? meetUrl : null,
+            is_published: isPublished
+          };
+          if (content) insertData.content = content;
+
+          let res = await client.from('offerings').insert(insertData).select();
+
+          // Fallback if content column doesn't exist on remote db yet
+          if (res.error && (res.error.code === '42703' || res.error.message?.includes('content'))) {
+            delete insertData.content;
+            res = await client.from('offerings').insert(insertData).select();
+          }
+
+          if (res.error) {
+            alert('Error adding offering: ' + res.error.message);
+            return;
+          }
+
+          showToast(`🎉 New ${type} "${name}" created successfully!`);
+          closeProductForm();
+          loadDashboardData();
+        }
+      } catch (err) {
+        alert('Unexpected error saving product: ' + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = originalText;
+      }
     }
 
     let toastTimeout;

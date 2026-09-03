@@ -584,6 +584,24 @@
       background: linear-gradient(145deg, #1b263b 0%, #0d1522 100%);
       border-left-color: #5d8bc9;
     }
+    .book-cover.has-image {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .book-cover.has-image .book-cover-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 16px;
+      background: linear-gradient(to top, rgba(14, 11, 8, 0.92) 0%, rgba(14, 11, 8, 0.5) 65%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-sizing: border-box;
+      z-index: 2;
+    }
     .book-cover::after {
       content: '';
       position: absolute;
@@ -2033,9 +2051,9 @@
 
     // Default static catalog with matched database UUIDs
     const defaultProducts = [
-      { id: '8d9d5ace-44c6-416c-8a65-7eece051b381', slug: 'krishnism', type: 'book', cover: '', name: 'Krishnism', desc: 'A companion for bringing Krishna consciousness into everyday life.', price: 399, kind: 'Collector Paperback' },
-      { id: '906d47ec-2c43-4e14-90a2-cad520ba2090', slug: 'gita-reflections', type: 'book', cover: 'green', name: 'Gita Reflections', desc: 'Short, gentle reflections to return to throughout your week.', price: 299, kind: 'Daily Contemplation' },
-      { id: '1d8755ad-729c-4335-b0e5-9023f79bc0c8', slug: 'way-of-devotion', type: 'book', cover: 'blue', name: 'The Way of Devotion', desc: 'Essays on bhakti, belonging and the art of surrender.', price: 349, kind: 'Collector Paperback' },
+      { id: '8d9d5ace-44c6-416c-8a65-7eece051b381', slug: 'krishnism', type: 'book', cover: '', name: 'Krishnism', desc: 'A companion for bringing Krishna consciousness into everyday life.', content: 'A companion for bringing Krishna consciousness into everyday life.\n\nDeeply inspired by the sublime teachings of the Bhagavad Gita, Krishnism explores devotion, stillness, mindful presence, and modern everyday sadhana. Each chapter is crafted as an intimate sanctuary for quiet morning contemplation.', price: 399, kind: 'Collector Paperback' },
+      { id: '906d47ec-2c43-4e14-90a2-cad520ba2090', slug: 'gita-reflections', type: 'book', cover: 'green', name: 'Gita Reflections', desc: 'Short, gentle reflections to return to throughout your week.', content: 'Short, gentle reflections to return to throughout your week.\n\nDistilled from timeless Sanskrit verses, Gita Reflections offers concise, meditative passages designed to be read in just two minutes each morning—bringing immediate clarity, equanimity, and devotional warmth to your day.', price: 299, kind: 'Daily Contemplation' },
+      { id: '1d8755ad-729c-4335-b0e5-9023f79bc0c8', slug: 'way-of-devotion', type: 'book', cover: 'blue', name: 'The Way of Devotion', desc: 'Essays on bhakti, belonging and the art of surrender.', content: 'Essays on bhakti, belonging and the art of surrender.\n\nA heartfelt exploration of the devotional path. Explaining surrender (sharanagati) not as passivity, but as the supreme courage of trusting the divine flow of Krishna\'s grace in every circumstance.', price: 349, kind: 'Collector Paperback' },
       { id: '773c01da-6dca-450b-b0d0-d0f6b62b26f3', slug: 'gita-living-guide', type: 'course', name: 'Bhagavad Gita: A Living Guide', desc: 'A guided journey through the Gita, with recorded teachings and reflection prompts.', price: 1499, kind: '12 recorded sessions' },
       { id: '432ffcbd-8ba5-46a5-9def-0935de55597c', slug: 'path-of-bhakti', type: 'course', name: 'The Path of Bhakti', desc: 'Discover devotion as a practical way of living with openness and love.', price: 999, kind: '8 recorded sessions' },
       { id: 'c65577c2-9c67-458d-86d2-f3e961cf4f19', slug: 'live-gita-circle', type: 'course', name: 'Live Gita Circle', desc: 'A warm, ongoing online study circle. Join live sessions on Google Meet.', price: 799, kind: 'Monthly membership' }
@@ -2266,12 +2284,27 @@
       // Books
       document.getElementById('bookCards').innerHTML = products.filter(x => x.type === 'book').map(p => {
         const rating = getOfferingRating(p.id);
+        const coverVal = (p.cover || '').trim();
+        const isImg = coverVal.startsWith('http') || coverVal.startsWith('data:image') || coverVal.startsWith('/');
+        const isThemeClass = coverVal === 'green' || coverVal === 'blue';
+
         return `
           <article class="book-card">
-            <div class="book-cover ${p.cover}" onclick="openProductModal('${p.id}')" title="Click to view details & reviews">
-              <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-              <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
-              <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
+            <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
+                 ${isImg ? `style="background-image: url('${coverVal}');"` : ''} 
+                 onclick="openProductModal('${p.id}')" 
+                 title="Click to view details & reviews">
+              ${isImg ? `
+                <div class="book-cover-overlay">
+                  <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                  <strong style="font-family:'Cinzel',serif; font-size:22px; line-height:1.1; margin:6px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
+                  <small style="font-size:10.5px; letter-spacing:.1em; color:#f0e2cf; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
+                </div>
+              ` : `
+                <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
+                <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
+              `}
             </div>
             
             <div>
@@ -2340,6 +2373,9 @@
       const rating = getOfferingRating(p.id);
       const isCourse = p.type === 'course';
       const prodReviews = rating.list || [];
+      const coverVal = (p.cover || '').trim();
+      const isImg = coverVal.startsWith('http') || coverVal.startsWith('data:image') || coverVal.startsWith('/');
+      const isThemeClass = coverVal === 'green' || coverVal === 'blue';
 
       const modalContent = document.getElementById('productModalContent');
       modalContent.innerHTML = `
@@ -2354,10 +2390,19 @@
         <div class="modal-grid">
           <div>
             ${!isCourse ? `
-              <div class="book-cover ${p.cover}" style="height:250px; margin-bottom:16px">
-                <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                <strong style="font-family:'Cinzel',serif; font-size:22px">${p.name}</strong>
-                <small style="font-size:11px; color:#e0d3c0">READ · REFLECT · LIVE</small>
+              <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
+                   style="height:270px; margin-bottom:16px; ${isImg ? `background-image: url('${coverVal}');` : ''}">
+                ${isImg ? `
+                  <div class="book-cover-overlay">
+                    <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                    <strong style="font-family:'Cinzel',serif; font-size:22px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
+                    <small style="font-size:11px; color:#e0d3c0; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
+                  </div>
+                ` : `
+                  <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                  <strong style="font-family:'Cinzel',serif; font-size:22px">${p.name}</strong>
+                  <small style="font-size:11px; color:#e0d3c0">READ · REFLECT · LIVE</small>
+                `}
               </div>
             ` : `
               <div class="modal-cover-box" style="margin-bottom:16px">
@@ -2367,7 +2412,7 @@
               </div>
             `}
 
-            <p style="font-size:14px; line-height:1.6; color:#5c5246; margin-bottom:18px">${p.desc}</p>
+            <div style="font-size:14px; line-height:1.65; color:#5c5246; margin-bottom:18px; white-space: pre-line;">${p.content || p.desc}</div>
             
             <button class="confirm-btn" style="margin-top:0" onclick="addToCart('${p.id}'); closeProductModal()">
               ${isCourse ? 'Enrol Now · ' : 'Add to Bag · '} ${money(p.price)}
@@ -2644,7 +2689,7 @@
 
       try {
         const [offeringsRes, settingsRes, reviewsRes] = await Promise.all([
-          client.from('offerings').select('id,type,name,description,price,kind,cover,meet_url').eq('is_published', true).order('created_at'),
+          client.from('offerings').select('*').eq('is_published', true).order('created_at'),
           client.from('store_settings').select('*').single(),
           client.from('reviews').select('*').eq('is_approved', true).order('created_at', { ascending: false })
         ]);
@@ -2655,6 +2700,7 @@
             type: p.type,
             name: p.name,
             desc: p.description,
+            content: p.content || p.description,
             price: p.price,
             kind: p.kind,
             cover: p.cover || '',
