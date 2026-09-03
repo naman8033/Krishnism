@@ -1,0 +1,2234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krishnism — Sacred Wisdom for Modern Living · Editions &amp; Courses</title>
+  <meta name="description" content="Explore the timeless living philosophy of Krishna and Bhagavad Gita through intimate study circles, self-paced immersions, and handcrafted book editions." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --ink: #14110e;
+      --ink-soft: #2d261e;
+      --paper: #fbf8f2;
+      --cream: #f4ecdc;
+      --cream-light: #faf5eb;
+      --saffron: #c85a17;
+      --saffron-light: #e0722e;
+      --saffron-dark: #9e3f08;
+      --gold: #d4a036;
+      --gold-light: #fbe3a1;
+      --gold-dark: #a17218;
+      --line: #e8dcc4;
+      --line-subtle: rgba(190, 165, 125, 0.25);
+      --card-bg: #ffffff;
+      --muted: #6b6051;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 4px 12px rgba(20, 17, 14, 0.04);
+      --shadow-md: 0 12px 32px -4px rgba(20, 17, 14, 0.08), 0 2px 6px rgba(20, 17, 14, 0.04);
+      --shadow-lg: 0 24px 50px -8px rgba(20, 17, 14, 0.12), 0 4px 12px rgba(20, 17, 14, 0.06);
+      --gold-gradient: linear-gradient(135deg, #fce1a2 0%, #d4a036 50%, #9a6f17 100%);
+      --saffron-gradient: linear-gradient(135deg, #e47833 0%, #c85a17 100%);
+      --dark-gradient: linear-gradient(145deg, #1e1913 0%, #110e0b 100%);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    /* Top Ticker / Announcement Bar */
+    .top-bar {
+      background: var(--dark-gradient);
+      color: #f7eedb;
+      padding: 10px 16px;
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+      z-index: 100;
+      border-bottom: 1px solid rgba(212, 160, 54, 0.2);
+    }
+    .top-bar span { color: var(--gold); }
+
+    /* Floating Glass Navigation */
+    .nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: rgba(251, 248, 242, 0.88);
+      backdrop-filter: blur(14px) saturate(180%);
+      border-bottom: 1px solid var(--line-subtle);
+      transition: all .3s ease;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1240px;
+      margin: auto;
+      padding: 16px 24px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .brand-lotus {
+      font-size: 24px;
+      color: var(--saffron);
+      filter: drop-shadow(0 2px 8px rgba(200, 90, 23, 0.3));
+    }
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: .08em;
+      color: var(--ink);
+    }
+    .brand-name span {
+      color: var(--saffron);
+      background: var(--saffron-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--ink-soft);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      position: relative;
+      padding: 6px 0;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--saffron); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--saffron-gradient);
+      transition: width .25s ease;
+      border-radius: 2px;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .account-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 100px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      transition: all .2s;
+    }
+    .account-link:hover {
+      background: #ebdcc0;
+      transform: translateY(-1px);
+    }
+
+    .cart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--dark-gradient);
+      color: #fff;
+      padding: 9px 20px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 13.5px;
+      border: 1px solid rgba(212, 160, 54, 0.3);
+      box-shadow: 0 4px 14px rgba(20, 17, 14, 0.15);
+      transition: all .25s cubic-bezier(.16, 1, .3, 1);
+    }
+    .cart-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(20, 17, 14, 0.25);
+    }
+    .cart-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--saffron-gradient);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      position: relative;
+      overflow: hidden;
+      padding: 60px 24px 80px;
+      background: radial-gradient(circle at 80% 30%, rgba(251, 227, 161, 0.35) 0%, rgba(251, 248, 242, 0) 60%),
+                  radial-gradient(circle at 10% 80%, rgba(228, 120, 51, 0.08) 0%, rgba(251, 248, 242, 0) 50%);
+    }
+    .hero {
+      max-width: 1240px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--saffron-dark);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      background: #25d366;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #25d366;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(46px, 5.8vw, 76px);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      margin: 0 0 22px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .hero h1 em {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--saffron);
+      background: var(--saffron-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    .hero p {
+      font-size: 17.5px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 530px;
+      margin: 0 0 32px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-gold {
+      background: var(--saffron-gradient);
+      color: #ffffff;
+      padding: 15px 30px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 0;
+      box-shadow: 0 8px 24px rgba(200, 90, 23, 0.28);
+      transition: all .25s ease;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(200, 90, 23, 0.38);
+      background: linear-gradient(135deg, #ec833e 0%, #b84f11 100%);
+    }
+
+    .btn-outline-dark {
+      background: transparent;
+      color: var(--ink);
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--ink);
+      transition: all .25s ease;
+    }
+    .btn-outline-dark:hover {
+      background: var(--ink);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line-subtle);
+    }
+    .trust-avatars {
+      display: flex;
+      margin-left: 8px;
+    }
+    .trust-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid #ffffff;
+      margin-left: -8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .trust-text {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .trust-text b { color: var(--ink); }
+
+    /* 3D Visual Hero Graphic */
+    .hero-art-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
+    }
+    .halo-glow {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(212, 160, 54, 0.25) 0%, rgba(200, 90, 23, 0.1) 45%, transparent 70%);
+      border-radius: 50%;
+      animation: pulseGlow 6s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow {
+      0% { transform: scale(0.9) rotate(0deg); opacity: 0.7; }
+      100% { transform: scale(1.1) rotate(15deg); opacity: 1; }
+    }
+
+    .sacred-mandala {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border: 1px dashed rgba(212, 160, 54, 0.4);
+      border-radius: 50%;
+      animation: rotateSlow 40s linear infinite;
+    }
+    .sacred-mandala::before {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(200, 90, 23, 0.25);
+      border-radius: 50%;
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 3D Book Visual Showcase */
+    .book-showcase-card {
+      position: relative;
+      z-index: 10;
+      width: 250px;
+      height: 350px;
+      background: var(--dark-gradient);
+      border-radius: 6px 14px 14px 6px;
+      box-shadow: -10px 20px 40px rgba(0,0,0,0.35), 0 30px 60px rgba(200,90,23,0.18);
+      padding: 30px 24px;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-left: 6px solid #d4a036;
+      transform: perspective(1000px) rotateY(-12deg) rotateX(6deg);
+      transition: transform .4s ease;
+    }
+    .book-showcase-card:hover {
+      transform: perspective(1000px) rotateY(-4deg) rotateX(2deg) translateY(-8px);
+    }
+    .book-foil-badge {
+      font-size: 10px;
+      letter-spacing: .2em;
+      color: var(--gold-light);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .book-foil-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: #fff;
+      line-height: 1.1;
+      margin: 10px 0;
+      letter-spacing: .04em;
+    }
+    .book-foil-sub {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      color: #dfd0bb;
+      font-size: 14px;
+    }
+    .book-ribbon {
+      width: 14px;
+      height: 40px;
+      background: var(--saffron);
+      position: absolute;
+      top: -6px;
+      right: 28px;
+      border-radius: 0 0 3px 3px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .floating-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 10px;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--line);
+      padding: 10px 16px;
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .floating-badge-star {
+      background: #fef3c7;
+      color: #d97706;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    /* Highlights Marquee Bar */
+    .marquee-bar {
+      background: #191410;
+      color: #eedcc0;
+      padding: 16px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid rgba(212,160,54,0.25);
+      border-bottom: 1px solid rgba(212,160,54,0.25);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 40px;
+      animation: marqueeScroll 28s linear infinite;
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .marquee-item span { color: var(--gold); }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Section Layout */
+    .section {
+      max-width: 1240px;
+      margin: auto;
+      padding: 90px 24px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 24px;
+    }
+    .section-subtitle {
+      font-size: 12.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--saffron);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(32px, 3.8vw, 44px);
+      line-height: 1.15;
+      margin: 0;
+      color: var(--ink);
+    }
+    .section-desc {
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 380px;
+      margin: 0;
+      text-align: right;
+    }
+
+    /* Book Cards Grid */
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+    .book-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all .35s cubic-bezier(.16, 1, .3, 1);
+    }
+    .book-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(200, 90, 23, 0.35);
+    }
+
+    .book-cover {
+      height: 250px;
+      background: var(--dark-gradient);
+      border-radius: 6px 12px 12px 6px;
+      border-left: 5px solid #d4a036;
+      color: #fff;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: -4px 10px 24px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .3s ease;
+    }
+    .book-cover:hover { transform: scale(1.02); }
+    .book-cover.green {
+      background: linear-gradient(145deg, #1d3326 0%, #102117 100%);
+      border-left-color: #55a878;
+    }
+    .book-cover.blue {
+      background: linear-gradient(145deg, #1b263b 0%, #0d1522 100%);
+      border-left-color: #5d8bc9;
+    }
+    .book-cover::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 15%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .book-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--cream);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-top: 18px;
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #945d0b;
+      background: #fdf5e6;
+      border: 1px solid #f0dcba;
+      padding: 4px 10px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .rating-badge:hover {
+      background: #faeccf;
+      transform: translateY(-1px);
+    }
+    .star-icon { color: #d97706; }
+
+    .book-title {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      margin: 12px 0 8px;
+      color: var(--ink);
+      cursor: pointer;
+      transition: color .2s;
+    }
+    .book-title:hover { color: var(--saffron); }
+    
+    .book-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 20px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+    }
+    .price-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .btn-add-bag {
+      background: var(--ink);
+      color: #fff;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 100px;
+      font-weight: 700;
+      font-size: 13px;
+      transition: all .2s;
+    }
+    .btn-add-bag:hover {
+      background: var(--saffron);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(200, 90, 23, 0.25);
+    }
+    .detail-link {
+      background: transparent;
+      border: 0;
+      color: var(--saffron);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .detail-link:hover { color: var(--saffron-hover); }
+
+    /* Course Cards Grid */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 32px;
+    }
+    .course-card {
+      background: var(--cream-light);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      transition: all .35s cubic-bezier(.16, 1, .3, 1);
+    }
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      background: #ffffff;
+      border-color: rgba(200, 90, 23, 0.4);
+    }
+    .course-card:nth-child(2) { background: #fdfbf7; }
+    
+    .course-num {
+      font-family: 'Cinzel', serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--saffron);
+      line-height: 1;
+    }
+    .course-title {
+      font-family: 'Cinzel', serif;
+      font-size: 23px;
+      margin: 14px 0 10px;
+      line-height: 1.25;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .course-title:hover { color: var(--saffron); }
+    .course-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    .course-badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .course-chip {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    /* Quote Banner */
+    .quote-section {
+      background: var(--dark-gradient);
+      color: #fff7eb;
+      padding: 100px 24px;
+      text-align: center;
+      position: relative;
+      border-top: 1px solid rgba(212,160,54,0.3);
+      border-bottom: 1px solid rgba(212,160,54,0.3);
+    }
+    .quote-section::before {
+      content: '“';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 180px;
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(212, 160, 54, 0.08);
+      pointer-events: none;
+    }
+    .quote-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(30px, 4.2vw, 48px);
+      line-height: 1.2;
+      max-width: 860px;
+      margin: 0 auto 20px;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .quote-cite {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* 3 Pillars / How it works */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .pillar-card {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all .3s ease;
+    }
+    .pillar-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(200, 90, 23, 0.3);
+    }
+    .pillar-num {
+      font-family: 'Cinzel', serif;
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--saffron);
+      margin-bottom: 14px;
+    }
+    .pillar-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      margin: 0 0 10px;
+      color: var(--ink);
+    }
+    .pillar-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* Reviews Section */
+    .reviews-section {
+      background: #f7efe1;
+      padding: 90px 24px;
+      border-top: 1px solid var(--line);
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      max-width: 1240px;
+      margin: auto;
+    }
+    .review-card-front {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .review-user-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .review-author-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .review-verified-tag {
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #110e0b;
+      color: #e5dac9;
+      padding: 70px 24px 40px;
+      border-top: 1px solid rgba(212,160,54,0.25);
+    }
+    .foot-in {
+      max-width: 1240px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+    .footer-brand-title span { color: var(--gold); }
+    .footer-desc {
+      color: #9f9382;
+      font-size: 14px;
+      max-width: 360px;
+      line-height: 1.6;
+    }
+    .foot-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      color: var(--gold);
+      letter-spacing: .1em;
+      margin: 0 0 16px;
+      text-transform: uppercase;
+    }
+    .foot-col a {
+      display: block;
+      color: #b7ab98;
+      text-decoration: none;
+      font-size: 13.5px;
+      margin-bottom: 10px;
+      transition: color .2s;
+    }
+    .foot-col a:hover { color: #fff; }
+    .foot-bottom {
+      max-width: 1240px;
+      margin: 28px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: #7a7062;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 14, 11, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity .25s ease;
+    }
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+    .panel {
+      background: #ffffff;
+      width: min(640px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 36px 32px;
+      position: relative;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+      border: 1px solid var(--line);
+      transform: scale(0.95);
+      transition: transform .25s cubic-bezier(.16, 1, .3, 1);
+    }
+    .modal.show .panel { transform: scale(1); }
+
+    .close-btn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      border: 0;
+      background: var(--cream);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--ink);
+      transition: background .2s;
+    }
+    .close-btn:hover { background: #e0d0b6; }
+
+    /* Cart Rows */
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid #cdbfa8;
+      background: #fff;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .qty-btn:hover { background: var(--cream); }
+    .del-btn {
+      border: none;
+      background: transparent;
+      color: #a84428;
+      font-size: 18px;
+      padding: 4px;
+    }
+    .total-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 20px;
+      font-weight: 800;
+      margin: 22px 0 16px;
+      padding-top: 16px;
+      border-top: 2px solid var(--line);
+    }
+
+    /* Checkout Form */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .form-grid input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cdbfa8;
+      background: #fffdfa;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .form-grid input:focus {
+      outline: none;
+      border-color: var(--saffron);
+      background: #fff;
+    }
+    .full { grid-column: 1 / -1; }
+
+    /* Free UPI Box */
+    .upi-box {
+      margin: 22px 0;
+      background: #faf4e8;
+      border: 1px solid #e2d2ba;
+      border-radius: var(--radius);
+      padding: 22px;
+    }
+    .upi-box-header {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .upi-id-badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      border: 1px dashed #caa976;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .copy-btn {
+      border: 0;
+      background: var(--ink);
+      color: #fff;
+      font-size: 12px;
+      padding: 7px 14px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .copy-btn:hover { background: #3d352b; }
+    
+    .qr-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 18px 0;
+      text-align: center;
+    }
+    .qr-code-img {
+      width: 190px;
+      height: 190px;
+      background: #fff;
+      padding: 8px;
+      border: 1px solid #d4c6af;
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    }
+    .pay-btn-mobile {
+      width: 100%;
+      background: #1b7a42;
+      color: #fff;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      margin: 14px 0;
+    }
+    .utr-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cdbfa8;
+      background: #fff;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .confirm-btn {
+      width: 100%;
+      background: var(--saffron-gradient);
+      color: #fff;
+      padding: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 100px;
+      margin-top: 16px;
+      border: 0;
+      box-shadow: 0 8px 20px rgba(200, 90, 23, 0.25);
+      transition: all .2s;
+    }
+    .confirm-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px rgba(200, 90, 23, 0.35);
+    }
+
+    /* Product Details & Reviews Modal */
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      margin-top: 14px;
+      align-items: start;
+    }
+    .modal-cover-box {
+      background: #f7efe1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .review-score-summary {
+      background: #fcf8ee;
+      border: 1px solid #ebdeca;
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .review-big-score {
+      font-family: 'Cinzel', serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .review-stars-gold {
+      color: #d97706;
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+    .reviews-list-container {
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+    .review-card-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .review-card-item:last-child { border-bottom: 0; }
+    .verified-reader-badge {
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 10.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-left: 6px;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--dark-gradient);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 100px;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 12px 32px rgba(0,0,0,.3);
+      transition: transform .3s ease;
+      z-index: 2000;
+      pointer-events: none;
+      border: 1px solid rgba(212,160,54,0.3);
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+      .hero p { margin: 0 auto 30px; }
+      .hero-actions { justify-content: center; }
+      .hero-trust { justify-content: center; }
+      .hero-art-box { min-height: 320px; }
+      .nav-links { display: none; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .section-desc { text-align: left; }
+      .modal-grid { grid-template-columns: 1fr; }
+      .foot-in { grid-template-columns: 1fr; gap: 32px; }
+      .foot-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 580px) {
+      .top-bar { font-size: 10px; padding: 8px 12px; }
+      .nav { padding: 12px 16px; }
+      .brand-name { font-size: 21px; }
+      .brand-lotus { font-size: 20px; }
+      .cart-btn { padding: 8px 14px; font-size: 12px; }
+      .account-link { padding: 6px 12px; font-size: 11.5px; }
+      
+      .hero-container { padding: 36px 16px 50px; }
+      .hero h1 { font-size: 34px; line-height: 1.1; }
+      .hero p { font-size: 15px; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .btn-gold, .btn-outline-dark { width: 100%; justify-content: center; padding: 14px 20px; }
+      .hero-trust { flex-direction: column; gap: 10px; text-align: center; }
+      .trust-avatars { justify-content: center; margin-left: 0; }
+
+      .section { padding: 50px 16px; }
+      .section-title { font-size: 28px; }
+      
+      .book-grid, .course-grid, .pillars-grid, .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .book-card, .course-card { padding: 20px 16px; }
+      .book-cover { height: 210px; padding: 18px 16px; }
+      .book-title, .course-title { font-size: 20px; }
+      
+      .quote-section { padding: 60px 16px; }
+      .quote-text { font-size: 24px; }
+
+      .form-grid { grid-template-columns: 1fr; gap: 10px; }
+      .panel { padding: 24px 16px; border-radius: 16px; max-height: 94vh; }
+      .close-btn { right: 14px; top: 14px; width: 30px; height: 30px; font-size: 16px; }
+      
+      .upi-id-badge { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .copy-btn { width: 100%; }
+      .qr-code-img { width: 160px; height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Banner -->
+  <div class="top-bar">
+    ✦ Timeless Gita Wisdom · Handcrafted Editions · Direct Zero-Fee UPI Payment · Live Sangha ✦
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-wrapper">
+    <nav class="nav">
+      <a href="index.html" class="brand">
+        <span class="brand-lotus">🪷</span>
+        <span class="brand-name">Krishn<span>ism</span></span>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#books">Sacred Books</a>
+        <a href="#courses">Guided Courses</a>
+        <a href="#journey">The Path</a>
+        <a href="#reviews">Seeker Reflections</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="account.html" class="account-link">
+          <span>👤</span> My Account
+        </a>
+        <button type="button" class="cart-btn" onclick="openCart()">
+          Bag <span id="count" class="cart-count">0</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-container">
+      <div class="hero">
+        <div>
+          <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            Ancient Wisdom · Contemporary Living
+          </div>
+          <h1>Return to your <em>inner sanctuary</em>.</h1>
+          <p>
+            Explore the timeless philosophy of Krishna and Bhagavad Gita through intimate study circles, self-paced guided immersions, and collector book editions crafted for your soul.
+          </p>
+          <div class="hero-actions">
+            <a class="btn-gold" href="#courses">Explore Courses →</a>
+            <a class="btn-outline-dark" href="#books">Shop Book Editions</a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-avatars">
+              <div class="trust-avatar">AS</div>
+              <div class="trust-avatar">RM</div>
+              <div class="trust-avatar">PV</div>
+              <div class="trust-avatar">✦</div>
+            </div>
+            <div class="trust-text">
+              Trusted by <b>10,000+ spiritual seekers</b> across India · <b>4.9★</b> Rating
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-art-box">
+          <div class="halo-glow"></div>
+          <div class="sacred-mandala"></div>
+          
+          <div class="book-showcase-card">
+            <div class="book-ribbon"></div>
+            <div>
+              <div class="book-foil-badge">Krishnism Editions</div>
+              <div class="book-foil-title">Bhagavad Gita</div>
+              <div class="book-foil-sub">A Living Guide for the Heart</div>
+            </div>
+            <div style="font-size:12px; color:var(--gold-light); display:flex; justify-content:space-between; align-items:center">
+              <span>✦ READ · REFLECT · LIVE</span>
+              <span>★★★★★</span>
+            </div>
+          </div>
+
+          <div class="floating-badge">
+            <div class="floating-badge-star">★</div>
+            <div>
+              <div style="font-size:13px; font-weight:700; color:var(--ink)">Verified Sangha</div>
+              <div style="font-size:11.5px; color:var(--muted)">WhatsApp Cohorts &amp; Live Meets</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Marquee Ticker -->
+    <div class="marquee-bar">
+      <div class="marquee-track">
+        <div class="marquee-item"><span>✦</span> TIMELESS GITA PHILOSOPHY</div>
+        <div class="marquee-item"><span>✦</span> 0% FEE DIRECT UPI CHECKOUT</div>
+        <div class="marquee-item"><span>✦</span> LIFELONG WHATSAPP STUDY COHORT</div>
+        <div class="marquee-item"><span>✦</span> TRACKED COURIER DISPATCH ACROSS INDIA</div>
+        <div class="marquee-item"><span>✦</span> OVER 10,000 DEVOTED READERS &amp; STUDENTS</div>
+        <div class="marquee-item"><span>✦</span> LIVE GOOGLE MEET DIALOGUES</div>
+        <!-- Duplicated for seamless loop -->
+        <div class="marquee-item"><span>✦</span> TIMELESS GITA PHILOSOPHY</div>
+        <div class="marquee-item"><span>✦</span> 0% FEE DIRECT UPI CHECKOUT</div>
+        <div class="marquee-item"><span>✦</span> LIFELONG WHATSAPP STUDY COHORT</div>
+        <div class="marquee-item"><span>✦</span> TRACKED COURIER DISPATCH ACROSS INDIA</div>
+      </div>
+    </div>
+
+    <!-- Books Section -->
+    <section class="section" id="books">
+      <div class="section-head">
+        <div>
+          <div class="section-subtitle">Read &amp; Contemplate</div>
+          <h2 class="section-title">Sacred Books for the Path</h2>
+        </div>
+        <p class="section-desc">Hand-bound collector paperbacks printed on warm cream parchment and shipped with love across India.</p>
+      </div>
+      <div class="book-grid" id="bookCards">
+        <!-- Dynamically rendered -->
+      </div>
+    </section>
+
+    <!-- Quote Banner -->
+    <section class="quote-section">
+      <blockquote class="quote-text">“The mind is a steadfast friend to the one who has mastered it, and the greatest enemy to the one who has not.”</blockquote>
+      <cite class="quote-cite">Bhagavad Gita · Chapter 6, Verse 6</cite>
+    </section>
+
+    <!-- Courses Section -->
+    <section class="section" id="courses">
+      <div class="section-head">
+        <div>
+          <div class="section-subtitle">Study at Your Own Rhythm</div>
+          <h2 class="section-title">Guided Video Immersions</h2>
+        </div>
+        <p class="section-desc">Structured recorded teachings, self-inquiry prompts, and direct access to live Google Meet study circles.</p>
+      </div>
+      <div class="course-grid" id="courseCards">
+        <!-- Dynamically rendered -->
+      </div>
+    </section>
+
+    <!-- 3 Pillars Section -->
+    <section class="section" id="journey" style="padding-top:40px">
+      <div class="section-head">
+        <div>
+          <div class="section-subtitle">Direct &amp; Personal</div>
+          <h2 class="section-title">Begin in Three Simple Steps</h2>
+        </div>
+        <p class="section-desc">Zero middleman fees, instant access, and personal community connection.</p>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-num">01</div>
+          <h3 class="pillar-title">Select Your Offering</h3>
+          <p class="pillar-desc">Choose a book edition or video immersion. Every course includes lifetime access and student sangha membership.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-num">02</div>
+          <h3 class="pillar-title">Zero-Fee Direct UPI</h3>
+          <p class="pillar-desc">Pay seamlessly using any UPI app (GPay, PhonePe, Paytm, BHIM) by scanning the QR code with 0% extra gateway fees.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-num">03</div>
+          <h3 class="pillar-title">Join the Sangha</h3>
+          <p class="pillar-desc">Verified course students receive instant access to private WhatsApp cohorts and live Google Meet circles. Books dispatch with tracked shipping.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Showcase -->
+    <section class="reviews-section" id="reviews">
+      <div class="section-head" style="max-width:1240px; margin:0 auto 40px">
+        <div>
+          <div class="section-subtitle">Voices of Devotion</div>
+          <h2 class="section-title">Seeker Reflections</h2>
+        </div>
+        <p class="section-desc">Authentic experiences from readers and students across our spiritual community.</p>
+      </div>
+      
+      <div class="reviews-grid">
+        <div class="review-card-front">
+          <div class="review-user-row">
+            <span class="review-author-name">Ananya Sharma</span>
+            <span class="review-verified-tag">✓ Verified Reader</span>
+          </div>
+          <div style="color:#d97706; font-size:14px; margin-bottom:8px">★★★★★</div>
+          <b style="font-size:14px; display:block; margin-bottom:4px; color:var(--ink)">“My daily morning sanctuary”</b>
+          <p style="font-size:13.5px; color:var(--muted); margin:0; line-height:1.5">
+            This book has become my morning companion. The language is gentle, deeply meditative, and practical for daily contemplation in modern life.
+          </p>
+        </div>
+
+        <div class="review-card-front">
+          <div class="review-user-row">
+            <span class="review-author-name">Aarav Kapoor</span>
+            <span class="review-verified-tag">✓ Verified Student</span>
+          </div>
+          <div style="color:#d97706; font-size:14px; margin-bottom:8px">★★★★★</div>
+          <b style="font-size:14px; display:block; margin-bottom:4px; color:var(--ink)">“Life-changing course experience”</b>
+          <p style="font-size:13.5px; color:var(--muted); margin:0; line-height:1.5">
+            The 12 recorded sessions are extraordinary. No pressure, just profound living wisdom. The WhatsApp cohort discussions add so much warmth and insight.
+          </p>
+        </div>
+
+        <div class="review-card-front">
+          <div class="review-user-row">
+            <span class="review-author-name">Priya Venkatesh</span>
+            <span class="review-verified-tag">✓ Verified Reader</span>
+          </div>
+          <div style="color:#d97706; font-size:14px; margin-bottom:8px">★★★★★</div>
+          <b style="font-size:14px; display:block; margin-bottom:4px; color:var(--ink)">“Transformative daily reflections”</b>
+          <p style="font-size:13.5px; color:var(--muted); margin:0; line-height:1.5">
+            Short, 2-minute readings that transform the entire tone of your day. The print and paper feel so premium and peaceful in hand.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="foot-in">
+      <div>
+        <div class="footer-brand-title">Krishn<span>ism</span></div>
+        <p class="footer-desc">
+          A dedicated sanctuary for returning to the living wisdom of Krishna and the Bhagavad Gita in everyday life.
+        </p>
+      </div>
+
+      <div class="foot-col">
+        <h4>Offerings</h4>
+        <a href="#books">Sacred Books</a>
+        <a href="#courses">Guided Courses</a>
+        <a href="account.html">My Account &amp; Cohorts</a>
+      </div>
+
+      <div class="foot-col">
+        <h4>Sangha &amp; Contact</h4>
+        <a href="account.html">Student Portal</a>
+        <a href="backoffice.html">Back Office Admin</a>
+        <a href="#books">Track Order Status</a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div>© 2026 Krishnism · Made for the inward journey</div>
+      <div>Designed with Devotion &amp; Reverence</div>
+    </div>
+  </footer>
+
+  <!-- Shopping Bag & Free UPI Checkout Modal -->
+  <div class="modal" id="cartModal">
+    <div class="panel">
+      <button class="close-btn" onclick="closeCart()">×</button>
+      
+      <!-- Cart & Checkout State -->
+      <div id="checkoutView">
+        <h2 style="font-family:'Cinzel',serif; font-size:28px; margin:0 0 16px">Your Spiritual Bag</h2>
+        <div id="cartItems"></div>
+        
+        <form id="checkoutForm" onsubmit="placeOrder(event)">
+          <div id="checkoutArea" style="display:none">
+            <div class="total-bar">
+              <span>Total Payable</span>
+              <span id="totalAmount" style="color:var(--saffron)">₹0</span>
+            </div>
+
+            <div style="font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--saffron); margin-top:20px">
+              1. Contact &amp; Delivery Details
+            </div>
+            <div class="form-grid">
+              <input id="customerName" required placeholder="Full Name">
+              <input id="customerPhone" required type="tel" placeholder="Phone (WhatsApp Number)">
+              <input id="customerEmail" required class="full" type="email" placeholder="Email (for course access & updates)">
+              <input id="customerAddress" required class="full" placeholder="Shipping Address (for physical books)">
+              <input id="customerCity" required placeholder="City">
+              <input id="customerPin" required placeholder="PIN Code">
+            </div>
+
+            <!-- Free Direct UPI Payment Box -->
+            <div class="upi-box">
+              <div class="upi-box-header">
+                <span>2. Direct UPI Payment (0% Fees)</span>
+                <span style="color:#1b7a42; font-size:12px">Instant · Secure</span>
+              </div>
+
+              <div class="upi-id-badge">
+                <div>
+                  <small style="color:var(--muted); display:block; font-size:11px">PAY TO UPI ID</small>
+                  <b id="displayUpiId">naman8080@ybl</b>
+                </div>
+                <button type="button" class="copy-btn" onclick="copyUpiId()">Copy UPI ID</button>
+              </div>
+
+              <!-- Desktop QR Code -->
+              <div class="qr-container">
+                <img id="upiQrCode" class="qr-code-img" alt="Scan to Pay UPI" src="">
+                <div style="font-size:12px; color:var(--muted); margin-top:8px">Scan with GPay, PhonePe, Paytm, or BHIM</div>
+              </div>
+
+              <!-- Mobile Instant Pay Link -->
+              <a id="upiIntentLink" class="pay-btn-mobile" href="#">⚡ Open in UPI App &amp; Pay</a>
+
+              <div style="margin-top:14px">
+                <label style="font-size:12px; font-weight:600; color:var(--ink)" for="paymentRef">
+                  12-digit UPI Reference / UTR No. (Optional / Recommended)
+                </label>
+                <input id="paymentRef" class="utr-input" placeholder="e.g. 423589123456 (from your payment receipt)">
+                <small style="font-size:11.5px; color:var(--muted); display:block; margin-top:4px">
+                  After paying in your UPI app, enter the reference number above and click confirm.
+                </small>
+              </div>
+            </div>
+
+            <button type="submit" class="confirm-btn" id="submitBtn">I Have Paid — Confirm Order</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success Confirmation State -->
+      <div id="successView" style="display:none" class="success-card" style="text-align:center; padding:20px 0">
+        <div style="font-size:48px; color:#25d366; margin-bottom:10px">✦</div>
+        <h3 style="font-family:'Cinzel',serif; font-size:28px; margin:0 0 8px">Order Placed Successfully!</h3>
+        <p style="color:var(--muted); font-size:14px; margin-bottom:8px">Thank you for your devotion and support.</p>
+        <div style="display:inline-block; background:var(--cream); padding:6px 16px; border-radius:100px; font-weight:700; font-size:14px; margin:8px 0 16px" id="successOrderNumber">Order: KRI-XXXXX</div>
+
+        <!-- Course Access Notice (Shown ONLY if order contains a Course) -->
+        <div id="successCourseDetails" style="background:#fdfaf3; border:1px solid #eedfbe; padding:18px; border-radius:8px; margin:16px 0; display:none; text-align:left">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+            <span style="font-size:18px">📖</span>
+            <b style="font-size:14px; color:#856404">Course Enrollment Under Verification</b>
+          </div>
+          <p style="font-size:13px; color:#5c4f3d; margin:0 0 10px; line-height:1.45">
+            We are verifying your UPI reference. Once confirmed, your private WhatsApp Cohort invite link and Google Meet access will automatically unlock in your <b>My Account</b> dashboard.
+          </p>
+          <a href="account.html" style="display:inline-block; font-size:12.5px; font-weight:700; color:var(--saffron); text-decoration:none">
+            Track Order &amp; Access in My Account →
+          </a>
+        </div>
+
+        <!-- Book Shipping Notice (Shown for Physical Book purchases) -->
+        <div id="successBookDetails" style="background:#fdfaf3; border:1px solid #eedfbe; padding:18px; border-radius:8px; margin:16px 0; display:none; text-align:left">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px">
+            <span style="font-size:18px">📦</span>
+            <b style="font-size:14px; color:#3b3124">Book Delivery &amp; Tracking</b>
+          </div>
+          <p style="font-size:13px; color:#5c4f3d; margin:0 0 10px; line-height:1.45">
+            Your physical book order is being lovingly prepared for dispatch via tracked courier. Tracking numbers will appear in your <b>My Account</b> page once shipped.
+          </p>
+          <a href="account.html" style="display:inline-block; font-size:12.5px; font-weight:700; color:var(--saffron); text-decoration:none">
+            Track Book Delivery in My Account →
+          </a>
+        </div>
+
+        <div style="margin-top:24px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+          <a href="account.html" class="btn-gold" style="font-size:13px; padding:10px 22px">View in My Account</a>
+          <button class="btn-outline-dark" style="font-size:13px; padding:10px 22px" onclick="closeCart()">Back to Store</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Product Details & Verified Reviews Modal -->
+  <div class="modal" id="productDetailModal">
+    <div class="panel" style="width:min(720px, 100%)">
+      <button class="close-btn" onclick="closeProductModal()">×</button>
+      <div id="productModalContent"></div>
+    </div>
+  </div>
+
+  <div id="toast">Copied to clipboard!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script>
+    // Legacy slug to UUID resolver mapping
+    const legacySlugMap = {
+      'book-krishnism': '8d9d5ace-44c6-416c-8a65-7eece051b381',
+      'krishnism': '8d9d5ace-44c6-416c-8a65-7eece051b381',
+      'book-gita': '906d47ec-2c43-4e14-90a2-cad520ba2090',
+      'gita-reflections': '906d47ec-2c43-4e14-90a2-cad520ba2090',
+      'book-devotion': '1d8755ad-729c-4335-b0e5-9023f79bc0c8',
+      'way-of-devotion': '1d8755ad-729c-4335-b0e5-9023f79bc0c8',
+      'course-gita': '773c01da-6dca-450b-b0d0-d0f6b62b26f3',
+      'gita-living-guide': '773c01da-6dca-450b-b0d0-d0f6b62b26f3',
+      'course-bhakti': '432ffcbd-8ba5-46a5-9def-0935de55597c',
+      'path-of-bhakti': '432ffcbd-8ba5-46a5-9def-0935de55597c',
+      'course-meet': 'c65577c2-9c67-458d-86d2-f3e961cf4f19',
+      'live-gita-circle': 'c65577c2-9c67-458d-86d2-f3e961cf4f19'
+    };
+
+    // Default static catalog with matched database UUIDs
+    const defaultProducts = [
+      { id: '8d9d5ace-44c6-416c-8a65-7eece051b381', slug: 'krishnism', type: 'book', cover: '', name: 'Krishnism', desc: 'A companion for bringing Krishna consciousness into everyday life.', price: 399, kind: 'Collector Paperback' },
+      { id: '906d47ec-2c43-4e14-90a2-cad520ba2090', slug: 'gita-reflections', type: 'book', cover: 'green', name: 'Gita Reflections', desc: 'Short, gentle reflections to return to throughout your week.', price: 299, kind: 'Daily Contemplation' },
+      { id: '1d8755ad-729c-4335-b0e5-9023f79bc0c8', slug: 'way-of-devotion', type: 'book', cover: 'blue', name: 'The Way of Devotion', desc: 'Essays on bhakti, belonging and the art of surrender.', price: 349, kind: 'Collector Paperback' },
+      { id: '773c01da-6dca-450b-b0d0-d0f6b62b26f3', slug: 'gita-living-guide', type: 'course', name: 'Bhagavad Gita: A Living Guide', desc: 'A guided journey through the Gita, with recorded teachings and reflection prompts.', price: 1499, kind: '12 recorded sessions' },
+      { id: '432ffcbd-8ba5-46a5-9def-0935de55597c', slug: 'path-of-bhakti', type: 'course', name: 'The Path of Bhakti', desc: 'Discover devotion as a practical way of living with openness and love.', price: 999, kind: '8 recorded sessions' },
+      { id: 'c65577c2-9c67-458d-86d2-f3e961cf4f19', slug: 'live-gita-circle', type: 'course', name: 'Live Gita Circle', desc: 'A warm, ongoing online study circle. Join live sessions on Google Meet.', price: 799, kind: 'Monthly membership' }
+    ];
+
+    let products = defaultProducts;
+    const dbConfig = window.KRISHNISM_SUPABASE || {};
+    const db = (dbConfig.url && dbConfig.publishableKey && !dbConfig.url.includes('YOUR_PROJECT_REF'))
+      ? window.supabase.createClient(dbConfig.url, dbConfig.publishableKey)
+      : null;
+
+    // Store settings with default fallbacks
+    let storeSettings = {
+      upi_id: dbConfig.defaultUpiId || 'naman8080@ybl',
+      upi_name: dbConfig.defaultUpiName || 'Krishnism',
+      whatsapp_group_url: '',
+      default_meet_url: '',
+      student_welcome: ''
+    };
+
+    // Load Cart from localStorage & migrate legacy slug IDs to UUIDs
+    let cart = [];
+    try {
+      const rawCart = JSON.parse(localStorage.getItem('krishnism-cart') || '[]');
+      if (Array.isArray(rawCart)) {
+        if (rawCart.length && typeof rawCart[0] === 'string') {
+          const counts = {};
+          rawCart.forEach(id => { 
+            const realId = legacySlugMap[id] || id;
+            counts[realId] = (counts[realId] || 0) + 1; 
+          });
+          cart = Object.keys(counts).map(id => ({ id, quantity: counts[id] }));
+        } else {
+          cart = rawCart.map(item => ({
+            id: legacySlugMap[item.id] || item.id,
+            quantity: Number(item.quantity) || 1
+          }));
+        }
+      }
+    } catch(e) {
+      cart = [];
+    }
+
+    // Seed / Fallback reviews for books & courses
+    const defaultReviews = [
+      {
+        offering_id: '8d9d5ace-44c6-416c-8a65-7eece051b381',
+        customer_name: 'Ananya Sharma',
+        rating: 5,
+        headline: 'My daily morning sanctuary',
+        comment: 'This book has become my morning companion. The language is gentle, deeply meditative, and practical for daily contemplation in modern life.',
+        created_at: '2026-08-20T10:00:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: '8d9d5ace-44c6-416c-8a65-7eece051b381',
+        customer_name: 'Rohan Mehta',
+        rating: 5,
+        headline: 'Clarity, depth, and beauty',
+        comment: 'A masterpiece of clarity and devotion. Brings the Gita essence right into everyday work and relationships without being preachy.',
+        created_at: '2026-08-25T14:30:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: '906d47ec-2c43-4e14-90a2-cad520ba2090',
+        customer_name: 'Priya Venkatesh',
+        rating: 5,
+        headline: 'Transformative daily reflections',
+        comment: 'Short, 2-minute readings that transform the entire tone of your day. The print and paper feel so premium and peaceful in hand.',
+        created_at: '2026-08-18T09:15:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: '1d8755ad-729c-4335-b0e5-9023f79bc0c8',
+        customer_name: 'Radhika Nair',
+        rating: 5,
+        headline: 'Speaks straight to the soul',
+        comment: 'Essays on bhakti and surrender that touch the deepest corners of the heart. Read it slowly with a cup of tea.',
+        created_at: '2026-08-22T16:45:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: '773c01da-6dca-450b-b0d0-d0f6b62b26f3',
+        customer_name: 'Aarav Kapoor',
+        rating: 5,
+        headline: 'Life-changing course experience',
+        comment: 'The 12 recorded sessions are extraordinary. No pressure, just profound living wisdom. The WhatsApp cohort discussions add so much warmth and insight.',
+        created_at: '2026-08-27T11:20:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: '432ffcbd-8ba5-46a5-9def-0935de55597c',
+        customer_name: 'Siddharth Joshi',
+        rating: 5,
+        headline: 'Practical devotion for daily living',
+        comment: 'Helped me understand bhakti not as an abstract ritual, but as an open-hearted way of relating to everything.',
+        created_at: '2026-08-29T18:00:00Z',
+        is_verified: true
+      },
+      {
+        offering_id: 'c65577c2-9c67-458d-86d2-f3e961cf4f19',
+        customer_name: 'Shweta Desai',
+        rating: 5,
+        headline: 'A quiet haven in a busy week',
+        comment: 'The live study circle sessions on Google Meet are the highlight of my week. Wonderful sangha and thoughtful discourse.',
+        created_at: '2026-08-30T20:10:00Z',
+        is_verified: true
+      }
+    ];
+
+    let reviews = defaultReviews;
+    let orders = JSON.parse(localStorage.getItem('krishnism-orders') || '[]');
+    const money = n => '₹' + Number(n || 0).toLocaleString('en-IN');
+
+    function getOfferingRating(id) {
+      const realId = legacySlugMap[id] || id;
+      const matched = reviews.filter(r => r.offering_id === realId || r.offering_id === id);
+      if (!matched.length) {
+        return { avg: '5.0', count: 1, stars: '★★★★★' };
+      }
+      const sum = matched.reduce((s, r) => s + (Number(r.rating) || 5), 0);
+      const avgNum = sum / matched.length;
+      const avg = avgNum.toFixed(1);
+      const fullStars = Math.round(avgNum);
+      const stars = '★'.repeat(fullStars) + '☆'.repeat(Math.max(0, 5 - fullStars));
+      return { avg, count: matched.length, stars, list: matched };
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    function copyUpiId() {
+      navigator.clipboard.writeText(storeSettings.upi_id).then(() => {
+        showToast('UPI ID copied: ' + storeSettings.upi_id);
+      }).catch(() => {
+        showToast('UPI ID: ' + storeSettings.upi_id);
+      });
+    }
+
+    function updateCartCount() {
+      const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      document.getElementById('count').textContent = totalCount;
+    }
+
+    function renderProducts() {
+      // Books
+      document.getElementById('bookCards').innerHTML = products.filter(x => x.type === 'book').map(p => {
+        const rating = getOfferingRating(p.id);
+        return `
+          <article class="book-card">
+            <div class="book-cover ${p.cover}" onclick="openProductModal('${p.id}')" title="Click to view details & reviews">
+              <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+              <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
+              <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
+            </div>
+            
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px">
+                <span class="book-tag">${p.kind}</span>
+                <button type="button" class="rating-badge" onclick="openProductModal('${p.id}')" title="Read verified reviews">
+                  <span class="star-icon">★</span> <b>${rating.avg}</b> <small>(${rating.count})</small>
+                </button>
+              </div>
+              <h3 class="book-title" onclick="openProductModal('${p.id}')">${p.name}</h3>
+              <p class="book-desc">${p.desc}</p>
+            </div>
+
+            <div class="card-footer">
+              <span class="price-tag">${money(p.price)}</span>
+              <div style="display:flex; gap:10px; align-items:center">
+                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Reviews</button>
+                <button class="btn-add-bag" onclick="addToCart('${p.id}')">Add to bag</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      // Courses
+      document.getElementById('courseCards').innerHTML = products.filter(x => x.type === 'course').map((p, i) => {
+        const rating = getOfferingRating(p.id);
+        return `
+          <article class="course-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:flex-start">
+                <span class="course-num">0${i + 1}</span>
+                <button type="button" class="rating-badge" onclick="openProductModal('${p.id}')" title="Read student reviews">
+                  <span class="star-icon">★</span> <b>${rating.avg}</b> <small>(${rating.count})</small>
+                </button>
+              </div>
+              <h3 class="course-title" onclick="openProductModal('${p.id}')">${p.name}</h3>
+              <p class="course-desc">${p.desc}</p>
+              
+              <div class="course-badge-row">
+                <span class="course-chip">📖 ${p.kind}</span>
+                <span class="course-chip">👥 WhatsApp Sangha</span>
+                <span class="course-chip">⚡ Instant Access</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span class="price-tag">${money(p.price)}</span>
+              <div style="display:flex; gap:10px; align-items:center">
+                <button type="button" class="detail-link" onclick="openProductModal('${p.id}')">Reviews</button>
+                <button class="btn-add-bag" onclick="addToCart('${p.id}')">${money(p.price)} · Enrol</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      updateCartCount();
+    }
+
+    function openProductModal(id) {
+      const realId = legacySlugMap[id] || id;
+      const p = products.find(x => x.id === realId || x.id === id || x.slug === id) || products[0];
+      if (!p) return;
+
+      const rating = getOfferingRating(p.id);
+      const isCourse = p.type === 'course';
+      const prodReviews = rating.list || [];
+
+      const modalContent = document.getElementById('productModalContent');
+      modalContent.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:18px">
+          <div>
+            <span class="book-tag" style="margin:0 0 6px">${p.kind}</span>
+            <h2 style="margin:0; font-family:'Cinzel', serif; font-size:28px">${p.name}</h2>
+          </div>
+          <b style="font-size:26px; color:var(--ink)">${money(p.price)}</b>
+        </div>
+
+        <div class="modal-grid">
+          <div>
+            ${!isCourse ? `
+              <div class="book-cover ${p.cover}" style="height:250px; margin-bottom:16px">
+                <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
+                <strong style="font-family:'Cinzel',serif; font-size:22px">${p.name}</strong>
+                <small style="font-size:11px; color:#e0d3c0">READ · REFLECT · LIVE</small>
+              </div>
+            ` : `
+              <div class="modal-cover-box" style="margin-bottom:16px">
+                <span style="font-size:42px; color:var(--saffron); line-height:1">🪷</span>
+                <b style="font-size:16px; display:block; margin:8px 0 4px">${p.name}</b>
+                <small style="color:var(--muted)">${p.kind}</small>
+              </div>
+            `}
+
+            <p style="font-size:14px; line-height:1.6; color:#5c5246; margin-bottom:18px">${p.desc}</p>
+            
+            <button class="confirm-btn" style="margin-top:0" onclick="addToCart('${p.id}'); closeProductModal()">
+              ${isCourse ? 'Enrol Now · ' : 'Add to Bag · '} ${money(p.price)}
+            </button>
+          </div>
+
+          <div>
+            <!-- Rating Summary Banner -->
+            <div class="review-score-summary">
+              <div class="review-big-score">${rating.avg}</div>
+              <div>
+                <div class="review-stars-gold">${rating.stars}</div>
+                <div style="font-size:12.5px; color:var(--muted)">
+                  Based on <b>${rating.count}</b> verified ${isCourse ? 'students' : 'readers'}
+                </div>
+              </div>
+            </div>
+
+            <h3 style="font-size:17px; margin:0 0 12px; font-family:'Cinzel', serif">
+              Verified Reflections (${rating.count})
+            </h3>
+
+            <div class="reviews-list-container">
+              ${prodReviews.map(r => {
+                const dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString('en-IN', { month:'short', day:'numeric', year:'numeric' }) : 'Verified Buyer';
+                const rStars = '★'.repeat(r.rating) + '☆'.repeat(Math.max(0, 5 - r.rating));
+                return `
+                  <div class="review-card-item">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
+                      <div>
+                        <b style="font-size:13.5px; color:var(--ink)">${r.customer_name}</b>
+                        <span class="verified-reader-badge">✓ Verified ${isCourse ? 'Student' : 'Reader'}</span>
+                      </div>
+                      <small style="color:var(--muted); font-size:11.5px">${dateStr}</small>
+                    </div>
+                    <div style="color:#d97706; font-size:13px; margin:2px 0 4px">${rStars}</div>
+                    ${r.headline ? `<b style="font-size:13px; color:#362d22; display:block; margin-bottom:2px">“${r.headline}”</b>` : ''}
+                    <p style="font-size:13px; color:#5e5447; margin:0; line-height:1.5">${r.comment}</p>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('productDetailModal').classList.add('show');
+    }
+
+    function closeProductModal() {
+      document.getElementById('productDetailModal').classList.remove('show');
+    }
+
+    function addToCart(id) {
+      const existing = cart.find(x => x.id === id);
+      if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+      } else {
+        cart.push({ id, quantity: 1 });
+      }
+      saveCart();
+      openCart();
+    }
+
+    function updateQty(index, delta) {
+      if (!cart[index]) return;
+      cart[index].quantity = (cart[index].quantity || 1) + delta;
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+      renderCart();
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+      renderCart();
+    }
+
+    function saveCart() {
+      localStorage.setItem('krishnism-cart', JSON.stringify(cart));
+      updateCartCount();
+    }
+
+    function openCart() {
+      renderCart();
+      document.getElementById('checkoutView').style.display = 'block';
+      document.getElementById('successView').style.display = 'none';
+      document.getElementById('cartModal').classList.add('show');
+    }
+
+    function closeCart() {
+      document.getElementById('cartModal').classList.remove('show');
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cartItems');
+      const checkoutArea = document.getElementById('checkoutArea');
+
+      if (!cart.length) {
+        container.innerHTML = `
+          <div style="padding:40px 0; text-align:center; color:var(--muted)">
+            <div style="font-size:42px; margin-bottom:10px">🪷</div>
+            <p style="font-size:15px; margin:0">Your spiritual bag is currently empty.</p>
+          </div>
+        `;
+        checkoutArea.style.display = 'none';
+        return;
+      }
+
+      checkoutArea.style.display = 'block';
+
+      let total = 0;
+      container.innerHTML = cart.map((item, index) => {
+        const prod = products.find(x => x.id === item.id || legacySlugMap[item.id] === x.id) || { name: 'Item', price: 0, kind: '' };
+        const qty = item.quantity || 1;
+        const itemTotal = prod.price * qty;
+        total += itemTotal;
+
+        return `
+          <div class="cart-row">
+            <div>
+              <div style="font-weight:700; font-size:14.5px">${prod.name}</div>
+              <small style="color:var(--muted)">${prod.kind} · ${money(prod.price)} each</small>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px">
+              <div style="display:flex; align-items:center; gap:6px">
+                <button type="button" class="qty-btn" onclick="updateQty(${index}, -1)">−</button>
+                <b style="font-size:14px; min-width:18px; text-align:center">${qty}</b>
+                <button type="button" class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              </div>
+              <b style="font-size:15px; min-width:65px; text-align:right">${money(itemTotal)}</b>
+              <button type="button" class="del-btn" onclick="removeFromCart(${index})" title="Remove">×</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('totalAmount').textContent = money(total);
+      document.getElementById('displayUpiId').textContent = storeSettings.upi_id;
+
+      // Update QR Code and UPI Intent link
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(storeSettings.upi_id)}&pn=${encodeURIComponent(storeSettings.upi_name)}&am=${total}&cu=INR&tn=${encodeURIComponent('Krishnism Order')}`;
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(upiUrl)}`;
+      
+      document.getElementById('upiQrCode').src = qrApiUrl;
+      document.getElementById('upiIntentLink').href = upiUrl;
+    }
+
+    async function placeOrder(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Verifying & placing order...';
+
+      const customer = {
+        name: document.getElementById('customerName').value.trim(),
+        phone: document.getElementById('customerPhone').value.trim(),
+        email: document.getElementById('customerEmail').value.trim(),
+        address: document.getElementById('customerAddress').value.trim(),
+        city: document.getElementById('customerCity').value.trim(),
+        pin: document.getElementById('customerPin').value.trim(),
+        payment_ref: document.getElementById('paymentRef').value.trim()
+      };
+
+      const hasCourse = cart.some(item => {
+        const p = products.find(x => x.id === item.id || x.slug === item.id || legacySlugMap[item.id] === x.id);
+        return p && p.type === 'course';
+      });
+      const hasBook = cart.some(item => {
+        const p = products.find(x => x.id === item.id || x.slug === item.id || legacySlugMap[item.id] === x.id);
+        return p && p.type === 'book';
+      });
+
+      let orderNumber = 'KRI-' + String(Date.now()).slice(-6);
+
+      if (db) {
+        const { data: { user } } = await db.auth.getUser();
+        if (!user) {
+          alert('Please sign in or create an account first so you can track your order & access course materials.');
+          location.href = 'account.html';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'I Have Paid — Confirm Order';
+          return;
+        }
+
+        const orderItems = cart.map(item => {
+          const matched = products.find(x => x.id === item.id || x.slug === item.id) || {};
+          const resolvedId = matched.id || legacySlugMap[item.id] || item.id;
+          return {
+            id: resolvedId,
+            quantity: Number(item.quantity) || 1
+          };
+        });
+
+        const { data: orderId, error } = await db.rpc('create_store_order', {
+          p_customer: customer,
+          p_items: orderItems
+        });
+
+        if (error) {
+          alert('Error creating order: ' + error.message);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'I Have Paid — Confirm Order';
+          return;
+        }
+
+        // Update customer profile
+        await db.from('customer_profiles').update({
+          full_name: customer.name,
+          phone: customer.phone,
+          shipping_address: customer.address,
+          city: customer.city,
+          pin_code: customer.pin
+        }).eq('id', user.id);
+
+        if (orderId) {
+          try {
+            const { data: ord } = await db.from('orders').select('order_number').eq('id', orderId).single();
+            if (ord?.order_number) {
+              orderNumber = ord.order_number;
+            }
+          } catch(err) {
+            orderNumber = 'Order Placed';
+          }
+        }
+      } else {
+        orders.unshift({
+          id: orderNumber,
+          date: new Date().toLocaleDateString('en-IN'),
+          items: cart.map(i => {
+            const prod = products.find(x => x.id === i.id) || {};
+            return { ...prod, quantity: i.quantity || 1 };
+          }),
+          total: cart.reduce((sum, i) => sum + (products.find(x => x.id === i.id)?.price || 0) * (i.quantity || 1), 0),
+          customer,
+          status: 'pending',
+          payment_ref: customer.payment_ref,
+          courier: '',
+          tracking: ''
+        });
+        localStorage.setItem('krishnism-orders', JSON.stringify(orders));
+      }
+
+      // Reset cart
+      cart = [];
+      saveCart();
+
+      // Show Success view
+      document.getElementById('checkoutView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+      document.getElementById('successOrderNumber').textContent = orderNumber;
+
+      document.getElementById('successCourseDetails').style.display = hasCourse ? 'block' : 'none';
+      document.getElementById('successBookDetails').style.display = (!hasCourse && hasBook) ? 'block' : 'none';
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'I Have Paid — Confirm Order';
+    }
+
+    async function loadStorefront() {
+      if (!db) {
+        renderProducts();
+        return;
+      }
+
+      try {
+        const [offeringsRes, settingsRes, reviewsRes] = await Promise.all([
+          db.from('offerings').select('id,type,name,description,price,kind,cover,meet_url').eq('is_published', true).order('created_at'),
+          db.from('store_settings').select('*').single(),
+          db.from('reviews').select('*').eq('is_approved', true).order('created_at', { ascending: false })
+        ]);
+
+        if (!offeringsRes.error && offeringsRes.data?.length) {
+          products = offeringsRes.data.map(p => ({
+            id: p.id,
+            type: p.type,
+            name: p.name,
+            desc: p.description,
+            price: p.price,
+            kind: p.kind,
+            cover: p.cover || '',
+            meet: p.meet_url || ''
+          }));
+        }
+
+        if (!reviewsRes.error && reviewsRes.data?.length) {
+          reviews = reviewsRes.data;
+        }
+
+        if (!settingsRes.error && settingsRes.data) {
+          storeSettings = {
+            upi_id: settingsRes.data.upi_id || storeSettings.upi_id,
+            upi_name: settingsRes.data.upi_name || storeSettings.upi_name,
+            whatsapp_group_url: settingsRes.data.whatsapp_group_url || '',
+            default_meet_url: settingsRes.data.default_meet_url || '',
+            student_welcome: settingsRes.data.student_welcome || ''
+          };
+        }
+      } catch(e) {
+        console.warn('Could not load remote store data:', e);
+      }
+
+      renderProducts();
+    }
+
+    loadStorefront();
+  </script>
+</body>
+</html>

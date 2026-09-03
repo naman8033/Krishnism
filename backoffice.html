@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krishnism — Back Office &amp; Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <style>
+    :root {
+      --ink: #27221b;
+      --paper: #faf6ee;
+      --cream: #f2e8d5;
+      --saffron: #be5c25;
+      --saffron-hover: #a34b1a;
+      --line: #e3d7c3;
+      --card-bg: #fffdf8;
+      --muted: #6b6256;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+    }
+    header {
+      background: #302a20;
+      color: #fff;
+      padding: 18px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .brand span { color: var(--saffron); }
+    main, .login-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 24px;
+    }
+    .login-container {
+      max-width: 420px;
+      margin-top: 60px;
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.04);
+    }
+    .login-container h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 36px;
+      margin: 0 0 12px;
+    }
+    input, textarea, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px;
+      margin: 6px 0 14px;
+      border: 1px solid #cbbda6;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--saffron);
+    }
+    button {
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 100px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    button:hover { background: #40382d; }
+    .btn-saffron { background: var(--saffron); }
+    .btn-saffron:hover { background: var(--saffron-hover); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+    }
+    .btn-outline:hover { background: var(--cream); }
+    .btn-danger {
+      background: transparent;
+      border: 1px solid #c0392b;
+      color: #c0392b;
+    }
+    .btn-danger:hover { background: #c0392b; color: #fff; }
+    .hidden { display: none !important; }
+    nav {
+      margin: 20px 0 28px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 14px;
+    }
+    .nav-tab {
+      padding: 9px 18px;
+      border-radius: 100px;
+      background: var(--cream);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+    .nav-tab.active {
+      background: var(--ink);
+      color: #fff;
+      border-color: var(--ink);
+    }
+    .view { display: none; }
+    .view.active { display: block; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      position: relative;
+    }
+    .card h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+      margin: 8px 0;
+      line-height: 1.1;
+    }
+    .card p {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--line);
+      margin-top: 16px;
+    }
+    th, td {
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 13.5px;
+      vertical-align: top;
+    }
+    th {
+      background: var(--cream);
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 13px;
+      letter-spacing: .04em;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-paid { background: #d4edda; color: #155724; }
+    .status-packed { background: #cce5ff; color: #004085; }
+    .status-shipped { background: #d1ecf1; color: #0c5460; }
+    .status-completed { background: #e2e3e5; color: #383d41; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+    .utr-pill {
+      display: inline-block;
+      background: #f0e6d6;
+      border: 1px dashed #c4b093;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: monospace;
+      margin-top: 4px;
+      color: #3b3124;
+    }
+    .table-input {
+      width: 100%;
+      min-width: 120px;
+      padding: 8px 10px;
+      margin: 2px 0;
+      font-size: 12.5px;
+    }
+    /* Customer & Stat Dashboard Styles */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .stat-num {
+      font-size: 30px;
+      font-weight: 700;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .search-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 10px 14px;
+      border: 1px solid #cbbda6;
+      border-radius: 6px;
+      font-size: 13.5px;
+      background: #fff;
+    }
+    .filter-select {
+      padding: 10px 14px;
+      border: 1px solid #cbbda6;
+      border-radius: 6px;
+      font-size: 13.5px;
+      background: #fff;
+      min-width: 180px;
+    }
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--saffron);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      border: 1px solid var(--line);
+      margin-right: 10px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    .tag-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      margin: 2px 4px 2px 0;
+    }
+    .tag-course { background: #e8f4fd; color: #0c5460; border: 1px solid #bee5eb; }
+    .tag-book { background: #fdf3e7; color: #856404; border: 1px solid #ffeeba; }
+    .wa-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #128c7e;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .wa-link:hover { text-decoration: underline; }
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #27221b;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 500;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (max-width: 850px) {
+      table { display: block; overflow-x: auto; white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast"></div>
+
+  <header>
+    <a href="index.html" class="brand">krish<span>n</span>ism</a>
+    <span style="font-size:13px; letter-spacing:.05em; text-transform:uppercase; color:#e0d3c0">Store Admin &amp; Back Office</span>
+  </header>
+
+  <!-- Login Section -->
+  <section id="loginView" class="login-container">
+    <h1>Admin Portal</h1>
+    <p style="color:var(--muted); font-size:14px">Sign in with your configured admin email to manage products, tracking, and UPI settings.</p>
+    <form onsubmit="handleAdminLogin(event)">
+      <label style="font-size:12px; font-weight:600">Admin Email</label>
+      <input id="adminEmail" type="email" required placeholder="admin@example.com">
+      <label style="font-size:12px; font-weight:600">Password</label>
+      <input id="adminPass" type="password" required placeholder="••••••••">
+      <button type="submit" class="btn-saffron" style="width:100%; margin-top:10px">Sign In to Dashboard</button>
+    </form>
+    <p id="authError" style="color:#be5c25; font-size:13px; margin-top:12px"></p>
+  </section>
+
+  <!-- Dashboard Section -->
+  <main id="appView" class="hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px">
+      <div>
+        <h1 style="font-family:'Cormorant Garamond',Georgia,serif; font-size:38px; margin:0">Store Dashboard</h1>
+        <p style="color:var(--muted); font-size:14px; margin:4px 0 0">
+          Manage offerings, review peer-to-peer UPI payments, update tracking numbers, and manage cohort links.
+        </p>
+      </div>
+      <button onclick="handleSignOut()" class="btn-outline">Sign Out</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav>
+      <button class="nav-tab active" onclick="switchTab('ordersTab', this)">Orders &amp; Payments</button>
+      <button class="nav-tab" onclick="switchTab('customersTab', this)">Customers &amp; Students</button>
+      <button class="nav-tab" onclick="switchTab('productsTab', this)">Books &amp; Courses</button>
+      <button class="nav-tab" onclick="switchTab('settingsTab', this)">Store &amp; UPI Settings</button>
+    </nav>
+
+    <!-- TAB 1: Orders & Payment Verification -->
+    <section id="ordersTab" class="view active">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+        <h2 style="font-family:'Cormorant Garamond'; font-size:28px; margin:0">Orders &amp; UPI Verifications</h2>
+        <button onclick="loadDashboardData()" class="btn-outline" style="padding:6px 14px; font-size:12px">↻ Refresh Orders</button>
+      </div>
+      <div id="ordersContainer">Loading orders...</div>
+    </section>
+
+    <!-- TAB 2: Customers & Students -->
+    <section id="customersTab" class="view">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:10px">
+        <div>
+          <h2 style="font-family:'Cormorant Garamond'; font-size:28px; margin:0">Customers &amp; Enrolled Students</h2>
+          <p style="color:var(--muted); font-size:13.5px; margin:2px 0 0">View registered customer profiles, contact info, course enrolments, and WhatsApp cohort status.</p>
+        </div>
+        <button onclick="loadDashboardData()" class="btn-outline" style="padding:6px 14px; font-size:12px">↻ Refresh Directory</button>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div id="customerStatGrid" class="stat-grid"></div>
+
+      <!-- Search & Filter Bar -->
+      <div class="search-row">
+        <input id="customerSearch" type="text" class="search-input" placeholder="🔍 Search customers by name, email, phone, or city..." oninput="handleCustomerFilter()">
+        <select id="customerFilter" class="filter-select" onchange="handleCustomerFilter()">
+          <option value="all">All Registered Customers</option>
+          <option value="course">Course Students Only</option>
+          <option value="book">Book Buyers Only</option>
+          <option value="wa-pending">WhatsApp Group Pending ⏳</option>
+          <option value="wa-added">WhatsApp Group Added ✅</option>
+        </select>
+      </div>
+
+      <!-- Customers Table -->
+      <div id="customersContainer">Loading directory...</div>
+    </section>
+
+    <!-- TAB 2: Books & Courses -->
+    <section id="productsTab" class="view">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+        <h2 style="font-family:'Cormorant Garamond'; font-size:28px; margin:0">Catalog Offerings</h2>
+        <button onclick="toggleProductForm()" class="btn-saffron">+ Add New Offering</button>
+      </div>
+
+      <!-- Add Product Form -->
+      <div id="productFormCard" class="card hidden" style="margin-bottom:24px; border:2px dashed var(--saffron)">
+        <h3 id="formTitle">Add New Offering</h3>
+        <form onsubmit="saveProduct(event)">
+          <input type="hidden" id="prodEditId">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px">
+            <div>
+              <label style="font-size:12px; font-weight:600">Offering Type</label>
+              <select id="prodType" required>
+                <option value="book">Book (Physical)</option>
+                <option value="course">Course (Online / Cohort)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:12px; font-weight:600">Price (INR)</label>
+              <input id="prodPrice" type="number" required placeholder="399" min="0">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px">
+            <div>
+              <label style="font-size:12px; font-weight:600">Title / Name</label>
+              <input id="prodName" required placeholder="e.g. Gita Reflections">
+            </div>
+            <div>
+              <label style="font-size:12px; font-weight:600">Kind / Badge</label>
+              <input id="prodKind" required placeholder="Paperback / 8 sessions">
+            </div>
+          </div>
+          <label style="font-size:12px; font-weight:600">Description</label>
+          <textarea id="prodDesc" required rows="3" placeholder="Summary of this book or course..."></textarea>
+          
+          <div style="display:flex; gap:10px; margin-top:10px">
+            <button type="submit" class="btn-saffron">Save Offering</button>
+            <button type="button" class="btn-outline" onclick="toggleProductForm()">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid">Loading catalog...</div>
+    </section>
+
+    <!-- TAB 3: Store & UPI Settings -->
+    <section id="settingsTab" class="view">
+      <div class="card" style="max-width:680px">
+        <h2 style="font-family:'Cormorant Garamond'; font-size:30px; margin:0 0 16px">Free Mode UPI &amp; Class Settings</h2>
+        <p style="color:var(--muted); font-size:13.5px; margin-bottom:20px">
+          These settings directly configure the 0%-fee UPI checkout, QR code display, and student cohort onboarding on your storefront.
+        </p>
+        <form onsubmit="saveSettings(event)">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px">
+            <div>
+              <label style="font-size:12.5px; font-weight:700">UPI ID (VPA)</label>
+              <input id="settingUpiId" required placeholder="naman8080@ybl">
+            </div>
+            <div>
+              <label style="font-size:12.5px; font-weight:700">UPI Payee / Business Name</label>
+              <input id="settingUpiName" required placeholder="Krishnism">
+            </div>
+          </div>
+
+          <label style="font-size:12.5px; font-weight:700">WhatsApp Community / Study Group Invite Link</label>
+          <input id="settingWa" placeholder="https://chat.whatsapp.com/...">
+          <small style="display:block; color:var(--muted); margin-top:-8px; margin-bottom:14px; font-size:11.5px">
+            🔒 Secure Access: This invite link is kept hidden until you verify the student's UPI payment and mark the order as <b>Paid</b>.
+          </small>
+
+          <label style="font-size:12.5px; font-weight:700">Default Google Meet Link (For Live Classes)</label>
+          <input id="settingMeet" placeholder="https://meet.google.com/xyz-abc-def">
+
+          <label style="font-size:12.5px; font-weight:700">Student Welcome Message</label>
+          <textarea id="settingWelcome" rows="3" placeholder="Welcome to the Krishnism study circle..."></textarea>
+
+          <button type="submit" class="btn-saffron" style="margin-top:10px">Save Settings</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const cfg = window.KRISHNISM_SUPABASE || {};
+    const db = (cfg.url && !cfg.url.includes('YOUR_PROJECT_REF'))
+      ? window.supabase.createClient(cfg.url, cfg.publishableKey)
+      : null;
+
+    let products = [];
+    let orders = [];
+    let customers = [];
+    let reviews = [];
+    let storeSettings = {};
+
+    const money = n => '₹' + Number(n || 0).toLocaleString('en-IN');
+
+    function switchTab(tabId, el) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      if (el) el.classList.add('active');
+    }
+
+    async function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminEmail').value.trim();
+      const pass = document.getElementById('adminPass').value;
+      const errEl = document.getElementById('authError');
+      errEl.textContent = '';
+
+      if (!db) {
+        errEl.textContent = 'Supabase database is not configured yet.';
+        return;
+      }
+
+      const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+      if (error) {
+        errEl.textContent = error.message;
+        return;
+      }
+      loadDashboardData();
+    }
+
+    async function handleSignOut() {
+      if (db) await db.auth.signOut();
+      location.reload();
+    }
+
+    async function loadDashboardData() {
+      if (!db) return;
+      const { data: { user } } = await db.auth.getUser();
+      if (!user) return;
+
+      document.getElementById('loginView').classList.add('hidden');
+      document.getElementById('appView').classList.remove('hidden');
+
+      const [pRes, oRes, sRes, cRes, rRes] = await Promise.all([
+        db.from('offerings').select('*').order('created_at', { ascending: false }),
+        db.from('orders').select('*, order_items(*)').order('created_at', { ascending: false }),
+        db.from('store_settings').select('*').single(),
+        db.from('customer_profiles').select('*').order('created_at', { ascending: false }),
+        db.from('reviews').select('*').order('created_at', { ascending: false })
+      ]);
+
+      if (oRes.error && (oRes.error.code === '42501' || oRes.error.message?.includes('policy') || oRes.error.message?.includes('permission'))) {
+        console.warn('Admin RLS note: Please run updated supabase-schema.sql for full admin access.', oRes.error);
+        showToast('⚠️ Note: Run supabase-schema.sql to authorize ' + user.email);
+      }
+
+      products = pRes.data || [];
+      orders = oRes.data || [];
+      storeSettings = sRes.data || {};
+      reviews = rRes?.data || [];
+      
+      const rawProfiles = cRes.data || [];
+      customers = buildCustomerDirectory(rawProfiles, orders);
+
+      renderProductsList();
+      renderOrdersList();
+      renderCustomersList();
+      renderSettings();
+    }
+
+    function buildCustomerDirectory(profiles, ordersList) {
+      const map = new Map();
+
+      // 1. Seed from profiles
+      profiles.forEach(p => {
+        const key = (p.email || p.id).toLowerCase().trim();
+        map.set(key, {
+          id: p.id,
+          email: p.email || '',
+          full_name: p.full_name || '',
+          phone: p.phone || '',
+          shipping_address: p.shipping_address || '',
+          city: p.city || '',
+          pin_code: p.pin_code || '',
+          whatsapp_added: !!p.whatsapp_added,
+          created_at: p.created_at || new Date().toISOString(),
+          ordersCount: 0,
+          totalSpent: 0,
+          courses: [],
+          books: []
+        });
+      });
+
+      // 2. Merge orders data
+      ordersList.forEach(o => {
+        const emailKey = (o.customer_email || '').toLowerCase().trim();
+        const userKey = (o.user_id || '').toLowerCase().trim();
+        let c = map.get(emailKey) || (userKey ? map.get(userKey) : null);
+
+        if (!c) {
+          c = {
+            id: o.user_id || ('ord_' + o.id),
+            email: o.customer_email || '',
+            full_name: o.customer_name || '',
+            phone: o.customer_phone || '',
+            shipping_address: o.shipping_address || '',
+            city: o.city || '',
+            pin_code: o.pin_code || '',
+            whatsapp_added: false,
+            created_at: o.created_at,
+            ordersCount: 0,
+            totalSpent: 0,
+            courses: [],
+            books: []
+          };
+          if (emailKey) map.set(emailKey, c);
+        }
+
+        // Fill in missing profile fields from order if blank
+        if (!c.full_name && o.customer_name) c.full_name = o.customer_name;
+        if (!c.phone && o.customer_phone) c.phone = o.customer_phone;
+        if (!c.shipping_address && o.shipping_address) c.shipping_address = o.shipping_address;
+        if (!c.city && o.city) c.city = o.city;
+        if (!c.pin_code && o.pin_code) c.pin_code = o.pin_code;
+
+        c.ordersCount += 1;
+        c.totalSpent += (o.total || 0);
+
+        (o.order_items || []).forEach(it => {
+          if (it.item_type === 'course' && !c.courses.includes(it.item_name)) {
+            c.courses.push(it.item_name);
+          } else if (it.item_type === 'book' && !c.books.includes(it.item_name)) {
+            c.books.push(it.item_name);
+          }
+        });
+      });
+
+      return Array.from(map.values()).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+
+    function renderCustomersList() {
+      // 1. KPI Stats
+      const totalCust = customers.length;
+      const totalStudents = customers.filter(c => c.courses.length > 0).length;
+      const totalBookBuyers = customers.filter(c => c.books.length > 0).length;
+      const waAddedCount = customers.filter(c => c.courses.length > 0 && c.whatsapp_added).length;
+
+      document.getElementById('customerStatGrid').innerHTML = `
+        <div class="stat-card">
+          <div class="stat-num">${totalCust}</div>
+          <div class="stat-label">Total Registered Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:#0c5460">${totalStudents}</div>
+          <div class="stat-label">Enrolled Course Students</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:#856404">${totalBookBuyers}</div>
+          <div class="stat-label">Book Buyers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="color:#155724">${waAddedCount} <small style="font-size:16px; color:var(--muted)">/ ${totalStudents}</small></div>
+          <div class="stat-label">Students in WhatsApp Cohort</div>
+        </div>
+      `;
+
+      handleCustomerFilter();
+    }
+
+    function handleCustomerFilter() {
+      const q = (document.getElementById('customerSearch')?.value || '').toLowerCase().trim();
+      const filterType = document.getElementById('customerFilter')?.value || 'all';
+
+      const filtered = customers.filter(c => {
+        // Search query filter
+        const matchQuery = !q || 
+          (c.full_name || '').toLowerCase().includes(q) ||
+          (c.email || '').toLowerCase().includes(q) ||
+          (c.phone || '').includes(q) ||
+          (c.city || '').toLowerCase().includes(q) ||
+          c.courses.some(name => name.toLowerCase().includes(q)) ||
+          c.books.some(name => name.toLowerCase().includes(q));
+
+        if (!matchQuery) return false;
+
+        // Type filter
+        if (filterType === 'course') return c.courses.length > 0;
+        if (filterType === 'book') return c.books.length > 0;
+        if (filterType === 'wa-pending') return c.courses.length > 0 && !c.whatsapp_added;
+        if (filterType === 'wa-added') return c.courses.length > 0 && c.whatsapp_added;
+        return true;
+      });
+
+      renderCustomerTable(filtered);
+    }
+
+    function renderCustomerTable(list) {
+      const container = document.getElementById('customersContainer');
+      if (!list.length) {
+        container.innerHTML = '<div class="card" style="text-align:center; color:var(--muted); padding:30px">No matching customers found.</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Contact &amp; WhatsApp</th>
+              <th>Location</th>
+              <th>Orders &amp; Value</th>
+              <th>Offerings Enrolled / Purchased</th>
+              <th>Course WhatsApp Cohort</th>
+              <th>Joined Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.map(c => {
+              const initials = (c.full_name || c.email || 'U').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+              const dateStr = new Date(c.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+              const cleanPhone = (c.phone || '').replace(/[^0-9]/g, '');
+              const waLink = cleanPhone ? `https://wa.me/91${cleanPhone.slice(-10)}` : null;
+              const hasCourses = c.courses.length > 0;
+
+              return `
+                <tr>
+                  <td>
+                    <div style="display:flex; align-items:center">
+                      <div class="avatar">${initials}</div>
+                      <div>
+                        <b>${c.full_name || 'Guest Student'}</b><br>
+                        <small style="color:var(--muted)">${c.email}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    ${waLink ? `
+                      <a href="${waLink}" target="_blank" class="wa-link" title="Open WhatsApp Chat">
+                        📱 ${c.phone} ↗
+                      </a>
+                    ` : '<span style="color:var(--muted); font-size:12px">No phone</span>'}
+                  </td>
+                  <td>
+                    <small style="color:#4a4135">${c.city ? (c.city + (c.pin_code ? ' — ' + c.pin_code : '')) : (c.shipping_address || '—')}</small>
+                  </td>
+                  <td>
+                    <b>${c.ordersCount} ${c.ordersCount === 1 ? 'order' : 'orders'}</b><br>
+                    <small style="color:var(--saffron); font-weight:700">${money(c.totalSpent)}</small>
+                  </td>
+                  <td>
+                    <div>
+                      ${c.courses.map(name => `<span class="tag-pill tag-course">📖 ${name}</span>`).join('')}
+                      ${c.books.map(name => `<span class="tag-pill tag-book">📦 ${name}</span>`).join('')}
+                      ${(!c.courses.length && !c.books.length) ? '<span style="color:var(--muted); font-size:12px">Registered User</span>' : ''}
+                    </div>
+                  </td>
+                  <td>
+                    ${hasCourses ? `
+                      <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:12.5px">
+                        <input type="checkbox" ${c.whatsapp_added ? 'checked' : ''} onchange="toggleCustomerWhatsApp('${c.id}', this.checked)">
+                        <span style="${c.whatsapp_added ? 'color:#155724; font-weight:700' : 'color:var(--muted)'}">
+                          ${c.whatsapp_added ? 'Added ✅' : 'Pending ⏳'}
+                        </span>
+                      </label>
+                    ` : `
+                      <span style="color:var(--muted); font-size:11.5px; font-style:italic">N/A (Book Buyer)</span>
+                    `}
+                  </td>
+                  <td>
+                    <small style="color:var(--muted)">${dateStr}</small>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function toggleCustomerWhatsApp(customerId, isAdded) {
+      if (!customerId || customerId.startsWith('ord_')) {
+        // Fallback for non-UUID order-based customers
+        const target = customers.find(c => c.id === customerId);
+        if (target) target.whatsapp_added = isAdded;
+        renderCustomersList();
+        return;
+      }
+
+      const { error } = await db.from('customer_profiles').update({ whatsapp_added: isAdded }).eq('id', customerId);
+      if (error) {
+        alert('Could not update status: ' + error.message);
+      } else {
+        const target = customers.find(c => c.id === customerId);
+        if (target) target.whatsapp_added = isAdded;
+        renderCustomersList();
+      }
+    }
+
+    function renderProductsList() {
+      const grid = document.getElementById('productsGrid');
+      if (!products.length) {
+        grid.innerHTML = '<p style="color:var(--muted)">No products created yet.</p>';
+        return;
+      }
+      grid.innerHTML = products.map(p => {
+        const prodReviews = reviews.filter(r => r.offering_id === p.id || r.offering_id === p.slug);
+        const avgRating = prodReviews.length 
+          ? (prodReviews.reduce((sum, r) => sum + Number(r.rating || 5), 0) / prodReviews.length).toFixed(1)
+          : '5.0';
+
+        return `
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center">
+              <span class="status-badge ${p.is_published ? 'status-paid' : 'status-cancelled'}">
+                ${p.is_published ? 'Published' : 'Draft / Hidden'}
+              </span>
+              <div style="display:flex; align-items:center; gap:6px">
+                <span style="font-size:12px; font-weight:700; color:#d97706">★ ${avgRating}</span>
+                <small style="color:var(--muted); font-size:11px">(${prodReviews.length} reviews)</small>
+                <small style="text-transform:uppercase; font-size:11px; font-weight:700; color:var(--muted); margin-left:4px">${p.type}</small>
+              </div>
+            </div>
+            <h3>${p.name}</h3>
+            <p>${p.description}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:12px; margin-top:12px">
+              <b style="font-size:17px">${money(p.price)}</b>
+              <div style="display:flex; gap:6px">
+                <button class="btn-outline" style="padding:6px 12px; font-size:12px" onclick="togglePublish('${p.id}', ${p.is_published})">
+                  ${p.is_published ? 'Hide' : 'Publish'}
+                </button>
+                <button class="btn-danger" style="padding:6px 10px; font-size:12px" onclick="deleteProduct('${p.id}')">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderOrdersList() {
+      const container = document.getElementById('ordersContainer');
+      if (!orders.length) {
+        container.innerHTML = '<div class="card" style="text-align:center; color:var(--muted)">No customer orders placed yet.</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Order &amp; Date</th>
+              <th>Customer &amp; Address</th>
+              <th>Items &amp; Amount</th>
+              <th>Payment UTR</th>
+              <th>Status</th>
+              <th>Courier &amp; Tracking</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${orders.map((o, i) => {
+              const itemsList = o.order_items.map(it => `${it.item_name} (x${it.quantity || 1})`).join('<br>');
+              const dateStr = new Date(o.created_at).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+              return `
+                <tr>
+                  <td>
+                    <b>${o.order_number}</b><br>
+                    <small style="color:var(--muted)">${dateStr}</small>
+                  </td>
+                  <td>
+                    <b>${o.customer_name}</b><br>
+                    <a href="https://wa.me/91${o.customer_phone.replace(/[^0-9]/g,'')}" target="_blank" style="color:var(--saffron); text-decoration:none">
+                      📱 ${o.customer_phone}
+                    </a><br>
+                    <small style="color:var(--muted)">${o.customer_email}</small><br>
+                    <small style="color:#554c41">${o.shipping_address ? (o.shipping_address + ', ' + o.city + ' ' + o.pin_code) : '—'}</small>
+                  </td>
+                  <td>
+                    <div style="font-size:13px">${itemsList}</div>
+                    <b style="color:var(--ink); display:block; margin-top:4px">${money(o.total)}</b>
+                  </td>
+                  <td>
+                    ${o.payment_ref ? `<span class="utr-pill" title="UPI UTR">${o.payment_ref}</span>` : '<span style="color:var(--muted); font-size:12px">None provided</span>'}
+                  </td>
+                  <td>
+                    <select id="status_${i}" class="table-input" style="padding:6px; font-size:12px" onchange="updateOrderStatus(${i})">
+                      <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>⏳ Pending</option>
+                      <option value="paid" ${o.status === 'paid' ? 'selected' : ''}>✅ Paid (Verified)</option>
+                      <option value="packed" ${o.status === 'packed' ? 'selected' : ''}>📦 Packed</option>
+                      <option value="shipped" ${o.status === 'shipped' ? 'selected' : ''}>🚚 Shipped</option>
+                      <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>🎉 Completed</option>
+                      <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input id="courier_${i}" class="table-input" placeholder="e.g. India Post / Bluedart" value="${o.courier || ''}">
+                    <input id="tracking_${i}" class="table-input" placeholder="Tracking Number" value="${o.tracking_number || ''}">
+                  </td>
+                  <td>
+                    <button class="btn-saffron" style="padding:7px 14px; font-size:12px" onclick="saveOrderTracking(${i})">Save</button>
+                  </td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderSettings() {
+      document.getElementById('settingUpiId').value = storeSettings.upi_id || 'naman8080@ybl';
+      document.getElementById('settingUpiName').value = storeSettings.upi_name || 'Krishnism';
+      document.getElementById('settingWa').value = storeSettings.whatsapp_group_url || '';
+      document.getElementById('settingMeet').value = storeSettings.default_meet_url || '';
+      document.getElementById('settingWelcome').value = storeSettings.student_welcome || '';
+    }
+
+    function toggleProductForm() {
+      const card = document.getElementById('productFormCard');
+      card.classList.toggle('hidden');
+    }
+
+    async function saveProduct(e) {
+      e.preventDefault();
+      const slug = document.getElementById('prodName').value.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString().slice(-4);
+      const newOffering = {
+        slug,
+        type: document.getElementById('prodType').value,
+        name: document.getElementById('prodName').value.trim(),
+        price: parseInt(document.getElementById('prodPrice').value, 10),
+        kind: document.getElementById('prodKind').value.trim(),
+        description: document.getElementById('prodDesc').value.trim(),
+        is_published: true
+      };
+
+      const { error } = await db.from('offerings').insert(newOffering);
+      if (error) {
+        alert('Error adding offering: ' + error.message);
+        return;
+      }
+      alert('Offering added successfully!');
+      toggleProductForm();
+      loadDashboardData();
+    }
+
+    let toastTimeout;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => t.classList.remove('show'), 2400);
+    }
+
+    async function togglePublish(id, currentStatus) {
+      const { data, error } = await db.from('offerings').update({ is_published: !currentStatus }).eq('id', id).select();
+      if (error) {
+        alert('Could not update offering: ' + error.message);
+      } else if (!data || data.length === 0) {
+        alert('Update blocked: You need admin permissions in Supabase (check is_store_admin).');
+      } else {
+        showToast(!currentStatus ? 'Offering published to store! 🌟' : 'Offering hidden (Draft mode)');
+        loadDashboardData();
+      }
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Are you sure you want to delete this offering?')) return;
+      const { data, error } = await db.from('offerings').delete().eq('id', id).select();
+      if (error) {
+        alert('Could not delete offering: ' + error.message);
+      } else if (!data || data.length === 0) {
+        alert('Delete blocked: You need admin permissions in Supabase.');
+      } else {
+        showToast('Offering deleted.');
+        loadDashboardData();
+      }
+    }
+
+    async function updateOrderStatus(index) {
+      const order = orders[index];
+      const selectEl = document.getElementById(`status_${index}`);
+      const newStatus = selectEl.value;
+
+      const { data, error } = await db.from('orders').update({ status: newStatus }).eq('id', order.id).select();
+
+      if (error) {
+        alert('Could not update status: ' + error.message);
+        selectEl.value = order.status; // Revert selection
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        alert('Permission Denied by Supabase Database:\n\nYour account is not recognized as the store administrator in Supabase. Please run the updated SQL in the Supabase SQL Editor with your email: naman8033@gmail.com.');
+        selectEl.value = order.status; // Revert selection
+        return;
+      }
+
+      order.status = newStatus;
+      showToast(`Order ${order.order_number} marked as "${newStatus.toUpperCase()}" ✅`);
+    }
+
+    async function saveOrderTracking(index) {
+      const order = orders[index];
+      const courier = document.getElementById(`courier_${index}`).value.trim();
+      const tracking = document.getElementById(`tracking_${index}`).value.trim();
+      const status = document.getElementById(`status_${index}`).value;
+
+      const { data, error } = await db.from('orders').update({
+        courier: courier || null,
+        tracking_number: tracking || null,
+        status: status
+      }).eq('id', order.id).select();
+
+      if (error) {
+        alert('Error saving order details: ' + error.message);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        alert('Permission Denied by Supabase Database:\n\nYour account is not recognized as the store administrator in Supabase. Please run the updated SQL in the Supabase SQL Editor with your email: naman8033@gmail.com.');
+        return;
+      }
+
+      order.courier = courier;
+      order.tracking_number = tracking;
+      order.status = status;
+      showToast(`Saved tracking for order ${order.order_number} 📦`);
+    }
+
+    async function saveSettings(e) {
+      e.preventDefault();
+      const upiId = document.getElementById('settingUpiId').value.trim();
+      const upiName = document.getElementById('settingUpiName').value.trim();
+      const wa = document.getElementById('settingWa').value.trim();
+      const meet = document.getElementById('settingMeet').value.trim();
+      const welcome = document.getElementById('settingWelcome').value.trim();
+
+      const { data, error } = await db.from('store_settings').upsert({
+        id: true,
+        upi_id: upiId,
+        upi_name: upiName,
+        whatsapp_group_url: wa || null,
+        default_meet_url: meet || null,
+        student_welcome: welcome || null
+      }).select();
+
+      if (error) {
+        alert('Error saving settings: ' + error.message);
+      } else if (!data || data.length === 0) {
+        alert('Permission Denied by Supabase: Check is_store_admin in SQL.');
+      } else {
+        showToast('Store and UPI settings updated successfully! ✨');
+      }
+    }
+
+    if (db) {
+      db.auth.getUser().then(({ data: { user } }) => {
+        if (user) loadDashboardData();
+      });
+    }
+  </script>
+</body>
+</html>
