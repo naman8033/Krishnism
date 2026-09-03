@@ -6,6 +6,11 @@
   <title>Krishnism — Sacred Wisdom for Modern Living · Editions &amp; Courses</title>
   <meta name="description" content="Explore the timeless living philosophy of Krishna and Bhagavad Gita through intimate study circles, self-paced immersions, and handcrafted book editions." />
   
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -89,14 +94,21 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
       color: var(--ink);
     }
-    .brand-lotus {
-      font-size: 24px;
-      color: var(--saffron);
-      filter: drop-shadow(0 2px 8px rgba(200, 90, 23, 0.3));
+    .brand-feather-icon {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(212, 160, 54, 0.35));
+      transition: transform .35s cubic-bezier(.16, 1, .3, 1);
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .brand:hover .brand-feather-icon {
+      transform: rotate(-6deg) scale(1.1);
     }
     .brand-name {
       font-family: 'Cinzel', serif;
@@ -1603,8 +1615,8 @@
   <!-- Navigation -->
   <div class="nav-wrapper">
     <nav class="nav">
-      <a href="index.html" class="brand">
-        <span class="brand-lotus">🪷</span>
+      <a href="index.html" class="brand" title="Krishnism — Sacred Wisdom House">
+        <img src="krishnism-feather-transparent.png" alt="Krishnism Peacock Feather" class="brand-feather-icon" />
         <span class="brand-name">Krishn<span>ism</span></span>
       </a>
       
@@ -1878,7 +1890,10 @@
   <footer class="footer">
     <div class="foot-in">
       <div>
-        <div class="footer-brand-title">Krishn<span>ism</span></div>
+        <div class="footer-brand-title" style="display:flex; align-items:center; gap:10px">
+          <img src="krishnism-feather-transparent.png" alt="Krishnism" style="height:34px; width:auto; filter:drop-shadow(0 2px 6px rgba(212,160,54,0.4))">
+          <span>Krishn<span>ism</span></span>
+        </div>
         <p class="footer-desc">
           A dedicated sanctuary for returning to the living wisdom of Krishna and the Bhagavad Gita in everyday life.
         </p>
