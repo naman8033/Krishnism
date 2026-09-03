@@ -559,23 +559,39 @@
       border-color: rgba(200, 90, 23, 0.35);
     }
 
+    .book-cover-stage {
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(ellipse at center, rgba(212, 160, 54, 0.09) 0%, rgba(39, 34, 27, 0.03) 65%, transparent 100%);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
     .book-cover {
-      height: 250px;
+      height: 295px;
+      width: 205px;
       background: var(--dark-gradient);
-      border-radius: 6px 12px 12px 6px;
+      border-radius: 4px 10px 10px 4px;
       border-left: 5px solid #d4a036;
       color: #fff;
-      padding: 24px 20px;
+      padding: 24px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      box-shadow: -4px 10px 24px rgba(0,0,0,0.18);
+      box-shadow: -4px 6px 18px rgba(0,0,0,0.22), 8px 14px 28px rgba(0,0,0,0.24);
       position: relative;
       overflow: hidden;
       cursor: pointer;
-      transition: transform .3s ease;
+      transition: transform .3s ease, box-shadow .3s ease;
+      flex-shrink: 0;
     }
-    .book-cover:hover { transform: scale(1.02); }
+    .book-cover:hover { 
+      transform: translateY(-4px) scale(1.02); 
+      box-shadow: -5px 8px 22px rgba(0,0,0,0.26), 10px 18px 36px rgba(0,0,0,0.3);
+    }
     .book-cover.green {
       background: linear-gradient(145deg, #1d3326 0%, #102117 100%);
       border-left-color: #55a878;
@@ -588,19 +604,7 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-    }
-    .book-cover.has-image .book-cover-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 18px 16px;
-      background: linear-gradient(to top, rgba(14, 11, 8, 0.92) 0%, rgba(14, 11, 8, 0.5) 65%, transparent 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      box-sizing: border-box;
-      z-index: 2;
+      padding: 0;
     }
     .book-cover::after {
       content: '';
@@ -1322,7 +1326,8 @@
         gap: 20px;
       }
       .book-card, .course-card { padding: 20px 16px; }
-      .book-cover { height: 210px; padding: 18px 16px; }
+      .book-cover-stage { height: 280px; margin-bottom: 14px; }
+      .book-cover { height: 255px; width: 175px; padding: 18px 14px; }
       .book-title, .course-title { font-size: 20px; }
       
       .quote-section { padding: 60px 16px; }
@@ -2345,24 +2350,20 @@
         return `
           <article class="book-card">
             <div>
-              <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
-                   ${isImg ? `style="background-image: url('${coverVal}');"` : ''} 
-                   onclick="openProductModal('${p.id}')" 
-                   title="Click to view details & reflections">
-                ${isImg ? `
-                  <div class="book-cover-overlay">
+              <div class="book-cover-stage">
+                <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
+                     ${isImg ? `style="background-image: url('${coverVal}');"` : ''} 
+                     onclick="openProductModal('${p.id}')" 
+                     title="Click to view details & reflections">
+                  ${!isImg ? `
                     <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                    <strong style="font-family:'Cinzel',serif; font-size:22px; line-height:1.1; margin:6px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
-                    <small style="font-size:10.5px; letter-spacing:.1em; color:#f0e2cf; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
-                  </div>
-                ` : `
-                  <small style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                  <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
-                  <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
-                `}
+                    <strong style="font-family:'Cinzel',serif; font-size:24px; line-height:1.1; margin:8px 0">${p.name}</strong>
+                    <small style="font-size:11px; letter-spacing:.1em; color:#e0d3c0">READ · REFLECT · LIVE</small>
+                  ` : ''}
+                </div>
               </div>
               
-              <div style="margin-top:14px">
+              <div style="margin-top:4px">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px">
                   <span class="book-tag">${p.kind}</span>
                   <button type="button" class="rating-badge" onclick="openProductModal('${p.id}')" title="Read verified reviews">
@@ -2462,19 +2463,15 @@
         <div class="modal-grid">
           <div>
             ${!isCourse ? `
-              <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
-                   style="height:310px; margin-bottom:14px; ${isImg ? `background-image: url('${coverVal}');` : ''}">
-                ${isImg ? `
-                  <div class="book-cover-overlay">
+              <div style="display:flex; justify-content:center; margin-bottom:14px">
+                <div class="book-cover ${isImg ? 'has-image' : (isThemeClass ? coverVal : '')}" 
+                     style="height:310px; width:215px; ${isImg ? `background-image: url('${coverVal}');` : ''}">
+                  ${!isImg ? `
                     <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                    <strong style="font-family:'Cinzel',serif; font-size:22px; text-shadow: 0 2px 8px rgba(0,0,0,0.8);">${p.name}</strong>
-                    <small style="font-size:11px; color:#e0d3c0; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">READ · REFLECT · LIVE</small>
-                  </div>
-                ` : `
-                  <small style="font-size:10px; letter-spacing:.18em; color:var(--gold-light)">KRISHNISM EDITIONS</small>
-                  <strong style="font-family:'Cinzel',serif; font-size:22px">${p.name}</strong>
-                  <small style="font-size:11px; color:#e0d3c0">READ · REFLECT · LIVE</small>
-                `}
+                    <strong style="font-family:'Cinzel',serif; font-size:22px">${p.name}</strong>
+                    <small style="font-size:11px; color:#e0d3c0">READ · REFLECT · LIVE</small>
+                  ` : ''}
+                </div>
               </div>
             ` : `
               <div class="modal-cover-box" style="margin-bottom:14px; padding:32px 16px">
